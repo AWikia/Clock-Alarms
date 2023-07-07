@@ -105,10 +105,10 @@
 							<div class="lunalevit"></div>
 							<h2>Ρολόι</h2>
 							<div class="cpe-button-group">
-								<button class="cpe-button is-tertiary is-unaccented">
+								<a href="ms-settings:dateandtime" class="cpe-button is-tertiary is-unaccented">
 								<span translate="no" class="cpe-icon cpe-icon-small material-icons">manage_history</span>
 								<span>Ρυθμίσεις Ώρας και Ημερομηνίας</span>
-								</button>
+								</a>
 							</div>
 						</footer>
 						<article>
@@ -241,15 +241,15 @@
 							<div class="lunalevit"></div>
 							<h2>Χρονόμετρο</h2>
 							<div class="cpe-button-group">
-								<button class="cpe-button is-tertiary is-success-color">
+								<button onclick="toggleTimer('Έναρξη', 'Παύση')" class="cpe-button is-tertiary timer-start is-success-color">
 								<span translate="no" class="cpe-icon cpe-icon-small material-icons">play_arrow</span>
 								<span>Έναρξη</span>
 								</button>
-								<button class="cpe-button is-tertiary is-unaccented">
+								<button onclick="NewLap()" disabled class="cpe-button is-tertiary timer-lap is-unaccented">
 								<span translate="no" class="cpe-icon cpe-icon-small material-icons">timer</span>
 								<span>Νέος Γύρος</span>
 								</button>
-								<button class="cpe-button is-tertiary is-alert-color">
+								<button onclick="StopTimer('Έναρξη')" disabled class="cpe-button is-tertiary timer-stop is-alert-color">
 								<span translate="no" class="cpe-icon cpe-icon-small material-icons">undo</span>
 								<span>Επαναφορά</span>
 								</button>
@@ -269,12 +269,11 @@
 							<span class="name">
 								Χρόνος
 							</span>
+							<span class="name">
+								Σύνολο
+							</span>
 						</header>
 						<article>
-							<header lapid="00" class="header item">
-								<span class="id">1</span>
-								<span class="name"><time>00:00:00.000</time></span>
-							</header>
 						</article>
 					</section>
 				</div>

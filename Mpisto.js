@@ -33,6 +33,10 @@
 		window.ckal_oldHour =  hour;
 		window.ckal_oldMin =  min;
 		setInterval(ChangeDate, 1000);
+		/* Timer Page */
+		window.ckal_totaltime = 0;
+		window.ckal_timertime = 0;
+		window.ckal_timerbegin = false;
 })();
 
 
@@ -49,7 +53,78 @@ function ChangeDate() {
 
 }
 
+function FormatTime(value) {
+	hours = String( Math.floor( value / 3600000 ) ).padStart(2, '0');
+	mins = String( Math.floor( (value / 60000) % 60 ) ).padStart(2, '0');
+	secs = String( Math.floor( (value / 1000) % 60 ) ).padStart(2, '0');
+	ms = String( (value % 1000) ).padStart(3, '0');
+	return hours + ":" + mins + ":" + secs + "." + ms; 
+}
 
+function toggleTimer(starttext="Start", pausetext="Pause") {
+	window.ckal_timerbegin = !window.ckal_timerbegin // Toggles Timer State (true = ticking | false = still)
+	elem = document.querySelector("main.timer .proc_page footer button.timer-start");
+	elemIcon = document.querySelector("main.timer .proc_page footer button.timer-start .cpe-icon");
+	elemSpan = document.querySelector("main.timer .proc_page footer button.timer-start .cpe-icon + span");
+	if (window.ckal_timerbegin) {
+		timerInterval = setInterval(countInterval, 5);
+		/* Turn Start Button to Pause */
+		elem.classList.replace('is-success-color', 'is-pause-color');
+		elemIcon.innerHTML = 'pause';
+		elemSpan.innerHTML = pausetext;
+		/* Update Timer Data */
+		document.querySelector("main.timer .proc_page footer button.timer-lap").disabled = false;
+		document.querySelector("main.timer .proc_page footer button.timer-stop").disabled = false;
+	} else {
+		clearInterval(timerInterval)
+		timerInterval = null;
+		/* Turn Pause Button back to Start */
+		elem.classList.replace('is-pause-color', 'is-success-color');
+		elemIcon.innerHTML = 'play_arrow';
+		elemSpan.innerHTML = starttext;
+		/* Update Timer Data */
+		document.querySelector("main.timer .proc_page footer button.timer-lap").disabled = true;
+		document.querySelector("main.timer .proc_page footer button.timer-stop").disabled = false;
+	}
+}
+
+function countInterval() {
+	window.ckal_totaltime = window.ckal_totaltime + 5;
+	window.ckal_timertime = window.ckal_timertime + 5;
+	document.querySelector('main.timer .proc_page .upper.timer time').innerHTML = FormatTime(window.ckal_totaltime);
+}
+
+function NewLap() {
+	str = 	'<header lapid="' + document.querySelectorAll("main.timer .proc_page section article .lap").length.toString().padStart(2, '0') +'" class="header item lap">' +
+				'<span class="id">' + (1 + document.querySelectorAll("main.timer .proc_page section article .lap").length) + '</span>' +
+				'<span class="name timer laptime"><time>' + FormatTime(window.ckal_timertime) + '</time></span>' +
+				'<span class="name timer totaltime"><time>' + FormatTime(window.ckal_totaltime) + '</time></span>' +
+			'</header>'
+	document.querySelector("main.timer .proc_page section article").insertAdjacentHTML('afterbegin',str);
+	window.ckal_timertime = 0;
+}
+
+function StopTimer(starttext="Start") {
+		/* Clear Timer Data */
+		window.ckal_timerbegin = false;
+		clearInterval(timerInterval)
+		timerInterval = null;
+		window.ckal_totaltime = 0;
+		window.ckal_timertime = 0;
+		/* Turn Pause Button back to Start */
+		elem = document.querySelector("main.timer .proc_page footer button.timer-start");
+		elemIcon = document.querySelector("main.timer .proc_page footer button.timer-start .cpe-icon");
+		elemSpan = document.querySelector("main.timer .proc_page footer button.timer-start .cpe-icon + span");
+		elem.classList.replace('is-pause-color', 'is-success-color');
+		elemIcon.innerHTML = 'play_arrow';
+		elemSpan.innerHTML = starttext;
+		/* Update Timer Data */
+		document.querySelector('main.timer .proc_page .upper.timer time').innerHTML = FormatTime(window.ckal_totaltime);
+		document.querySelector("main.timer .proc_page footer button.timer-lap").disabled = true;
+		document.querySelector("main.timer .proc_page footer button.timer-stop").disabled = true;
+		document.querySelector("main.timer .proc_page section article").innerHTML = '';
+		document.querySelector('.focus-overlay').focus();
+}
 
 /* Section Changing Functions */
 
