@@ -26,12 +26,28 @@
 		document.getElementById("LandingPage" + ['01','02','03','04'][ ['clock','alarms','stopwatch','timer'].indexOf(default_page) ]).checked=true;
 //Clock
 		date = new Date();
-		document.querySelector('main.clock .proc_page .clock_time time').innerHTML = date.getHours().toString().padStart(2, '0') + ':' +  date.getMinutes().toString().padStart(2, '0');
+		hour = date.getHours().toString().padStart(2, '0');
+		min = date.getMinutes().toString().padStart(2, '0');
+		document.querySelector('main.clock .proc_page .clock_time time').innerHTML = hour + ':' +  min;
 		document.querySelector('main.clock .proc_page .clock_time date').innerHTML = date.getDate().toString().padStart(2, '0') + '/' +  (date.getMonth() + 1).toString().padStart(2, '0') + '/' +  date.getFullYear().toString().padStart(4, '0');
-
+		window.ckal_oldHour =  hour;
+		window.ckal_oldMin =  min;
+		setInterval(ChangeDate, 1000);
 })();
 
 
+function ChangeDate() {
+	date = new Date();
+	hour = date.getHours().toString().padStart(2, '0');
+	min = date.getMinutes().toString().padStart(2, '0');
+	if ( (window.ckal_oldHour != hour) || (window.ckal_oldMin != min) ) {
+		document.querySelector('main.clock .proc_page .clock_time time').innerHTML = hour + ':' +  min;
+		document.querySelector('main.clock .proc_page .clock_time date').innerHTML = date.getDate().toString().padStart(2, '0') + '/' +  (date.getMonth() + 1).toString().padStart(2, '0') + '/' +  date.getFullYear().toString().padStart(4, '0');
+		window.ckal_oldHour =  hour;
+		window.ckal_oldMin =  min;
+	}
+
+}
 
 
 

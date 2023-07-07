@@ -44,8 +44,8 @@
 	color:var(--hyperlink-foreground-color);
 }
 
-.visualstyle-general [page*="recent"] .tabs .recent,
-.visualstyle-general [page*="libraries"] .tabs .libraries,
+.visualstyle-general [page*="clock"] .tabs .clock,
+.visualstyle-general [page*="alarms"] .tabs .alarms,
 .visualstyle-general [page*="stopwatch"] .tabs .stopwatch,
 .visualstyle-general [page*="timer"] .tabs .timer,
 .visualstyle-general [page*="settings"] .tabs .settings,
@@ -129,8 +129,8 @@
 /** Simple **/
 /* Standard */
 .visualstyle-simple .tabs a:hover,
-.visualstyle-simple [page*="recent"] .tabs .recent,
-.visualstyle-simple [page*="libraries"] .tabs .libraries,
+.visualstyle-simple [page*="clock"] .tabs .clock,
+.visualstyle-simple [page*="alarms"] .tabs .alarms,
 .visualstyle-simple [page*="stopwatch"] .tabs .stopwatch,
 .visualstyle-simple [page*="timer"] .tabs .timer,
 .visualstyle-simple [page*="settings"] .tabs .settings,
@@ -151,8 +151,8 @@
 }
 
 .visualstyle-simple.visualmode-contrast .tabs a:hover,
-.visualstyle-simple.visualmode-contrast [page*="recent"] .tabs .recent,
-.visualstyle-simple.visualmode-contrast [page*="libraries"] .tabs .libraries,
+.visualstyle-simple.visualmode-contrast [page*="clock"] .tabs .clock,
+.visualstyle-simple.visualmode-contrast [page*="alarms"] .tabs .alarms,
 .visualstyle-simple.visualmode-contrast [page*="stopwatch"] .tabs .stopwatch,
 .visualstyle-simple.visualmode-contrast [page*="timer"] .tabs .timer,
 .visualstyle-simple.visualmode-contrast [page*="settings"] .tabs .settings,
