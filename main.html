@@ -1,0 +1,547 @@
+﻿<html class="main">
+	<body onfocus="CheckTheme()" page="processes" tab="CPU" onblur="CheckTheme()"  class="clock_alarm" style="overflow:hidden;" id="Handler" onclick="">
+	<div style="position:absolute; z-index:-1;">
+		<div class="cpe-system-colors dcm-standard">
+			<span class="fc-canvas" style="color:window; color:canvas;"></span>
+			<span class="fc-canvastext" style="color:windowtext; color:canvastext;"></span>
+			<span class="fc-linktext" style="color:highlight; color:linktext;"></span>
+			<span class="fc-visitedtext" style="color:highlight; color:visitedtext;"></span>
+			<span class="fc-activetext" style="color:highlight; color:activetext;"></span>
+			<span class="fc-buttonface" style="color:buttonface;"></span>
+			<span class="fc-buttontext" style="color:buttontext;"></span>
+			<span class="fc-buttonborder" style="color:buttontext; color:buttonborder;"></span>
+			<span class="fc-field" style="color:window; color:canvas; color:field;"></span>
+			<span class="fc-fieldtext" style="color:windowtext; color:canvastext; color:fieldtext;"></span>
+			<span class="fc-highlight" style="color:highlight;"></span>
+			<span class="fc-highlighttext" style="color:highlighttext;"></span>
+			<span class="fc-selecteditem" style="color:highlight; color:selecteditem;"></span>
+			<span class="fc-selecteditemtext" style="color:highlighttext; color:selecteditemtext;"></span>
+			<span class="fc-mark" style="color:yellow; color:mark;"></span>
+			<span class="fc-marktext" style="color:black; color:marktext;"></span>
+			<span class="fc-graytext" style="color:graytext;"></span>
+			<span class="fc-accentcolor" style="color:highlight;color:accentcolor;"></span>
+			<span class="fc-accentcolortext" style="color:highlighttext; color:accentcolortext;"></span>
+		</div>
+		<div class="cpe-system-colors dcm-reversi">
+			<span class="fc-canvas" style="color:windowtext; color:canvastext;"></span>
+			<span class="fc-canvastext" style="color:window; color:canvas;"></span>
+			<span class="fc-linktext" style="color:highlight;"></span>
+			<span class="fc-visitedtext" style="color:highlight;"></span>
+			<span class="fc-activetext" style="color:highlight;"></span>
+			<span class="fc-buttonface" style="color:buttontext;"></span>
+			<span class="fc-buttontext" style="color:buttonface;"></span>
+			<span class="fc-buttonborder" style="color:buttonface"></span>
+			<span class="fc-field" style="color:windowtext; color:canvastext; color:fieldtext;"></span>
+			<span class="fc-fieldtext" style="color:window; color:canvas; color:field;"></span>
+			<span class="fc-highlight" style="color:highlight; color:linktext;"></span>
+			<span class="fc-highlighttext" style="color:canvastext;"></span>
+			<span class="fc-selecteditem" style="color:highlight; color:selecteditem;"></span>
+			<span class="fc-selecteditemtext" style="color:highlighttext; color:selecteditemtext;"></span>
+			<span class="fc-mark" style="color:yellow; color:mark;"></span>
+			<span class="fc-marktext" style="color:black; color:marktext;"></span>
+			<span class="fc-graytext" style="color:graytext;"></span>
+			<span class="fc-accentcolor" style="color:highlight;color:accentcolor;"></span>
+			<span class="fc-accentcolortext" style="color:highlighttext; color:accentcolortext;"></span>
+		</div>
+		<!-- Theming (Standard Color Scheme) -->
+		<div class="cpe-theming visualcolors-standard colorscheme-light theme-A"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-light theme-B"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-light theme-C"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-light theme-D"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-light theme-E"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-light theme-F"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-light theme-G"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-light theme-H"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-dark theme-A"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-dark theme-B"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-dark theme-C"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-dark theme-D"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-dark theme-E"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-dark theme-F"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-dark theme-G"></div>
+		<div class="cpe-theming visualcolors-standard colorscheme-dark theme-H"></div>
+
+		<!-- Theming 3 (DCM Color Scheme) -->
+		<div class="cpe-theming visualcolors-nocolormanagement"></div>
+		<div class="cpe-theming visualcolors-nocolormanagement dcmmode-standard"></div>
+		<div class="cpe-theming visualcolors-nocolormanagement dcmmode-lite"></div>
+		<div class="cpe-theming visualcolors-nocolormanagement dcmmode-general"></div>
+		<div class="cpe-theming visualcolors-nocolormanagement dcmmode-basic"></div>
+		<div class="cpe-theming visualcolors-nocolormanagement dcmmode-simple"></div>
+		<div class="cpe-theming visualcolors-nocolormanagement dcmmode-classic"></div>
+		<div class="cpe-theming visualcolors-nocolormanagement dcmmode-contrast"></div>
+		<div class="cpe-theming visualcolors-nocolormanagement dcmmode-retro"></div>
+		<div class="cpe-theming visualcolors-nocolormanagement dcmmode-custom_1"></div>
+		<div class="cpe-theming visualcolors-nocolormanagement dcmmode-custom_2"></div>
+		<div class="cpe-theming visualcolors-nocolormanagement dcmmode-custom_3"></div>
+		<div class="cpe-theming visualcolors-nocolormanagement dcmmode-custom_4"></div>
+	</div>
+	<div tabindex="-1" class="focus-overlay" style="pointer-events:none;"></div>
+	<div id="LunaLevit" style=" pointer-events: none; position: fixed; z-index: -2; width: 100%; height: 100%;">
+		<div class="invertion-on" style=" pointer-events: none; position: fixed; z-index: -2; width: 100%; height: 100%;">
+			<div id="LunaLevit3" class="desktop-background fandom-community-header__background" style="position:absolute; pointer-events:none;" id="desktop-background">
+			</div>
+		</div>
+	</div>
+	<div class="top-gap" style="pointer-events:none;"></div>
+		<container>
+			<div class="tabs-with-page">
+			<header class="tabs">
+				<div class="lunalevit"></div>
+				<div class="items">
+					<a class="clock has-icon" onclick="Tab0()">Ρολόι</a>
+					<a class="alarms has-icon" onclick="Tab1()">Αφυπνήσεις</a>
+					<a class="stopwatch has-icon" onclick="Tab2()">Χρονοδιακόπτης</a>
+					<a class="timer has-icon" onclick="Tab3()">Χρονόμετρο</a>
+				</div>
+				<div class="separator"></div>
+				<a class="settings has-icon" onclick="Tab4()">Ρυθμίσεις</a>
+			</header>
+			<!--Clock-->
+			<main class="clock">
+				<div class="proc_page">
+					<section>
+						<footer>
+							<div class="lunalevit"></div>
+							<h2>Ρολόι</h2>
+							<div class="cpe-button-group">
+								<button class="cpe-button is-tertiary is-unaccented">
+								<span translate="no" class="cpe-icon cpe-icon-small material-icons">manage_history</span>
+								<span>Ρυθμίσεις Ώρας και Ημερομηνίας</span>
+								</button>
+							</div>
+						</footer>
+						<article>
+							<div class="clock_time">
+								<time>00:00</time>
+								<date>00/00/0000</date>
+							</div>
+						</article>
+					</section>
+				</div>
+			</main>
+			<!--Alarms-->
+			<main class="alarms">
+				<div class="proc_page">
+					<section>
+						<footer>
+							<div class="lunalevit"></div>
+							<h2>Αφυπνήσεις</h2>
+							<div class="cpe-button-group">
+								<button class="cpe-button is-tertiary is-unaccented">
+								<span translate="no" class="cpe-icon cpe-icon-small material-icons">alarm_add</span>
+								<span>Νέα Αφύπνηση</span>
+								</button>
+							</div>
+						</footer>
+						<header class="header upper">
+							<span class="name">
+								Όνομα
+							</span>
+							<span class="time">
+								Ώρα
+							</span>
+							<span class="repeat">
+								Επανάληψη
+							</span>
+						</header>
+						<article>
+							<header clockid="00" class="header item">
+								<span class="name">
+									<input type="checkbox" title="Έναρξη Αφύπνησης" name="Alarm00">
+									Καλημέρα
+								</span>
+								<span class="time"><time>08:30</time></span>
+								<span class="repeat">Δε-Τρ-Τε-Πε-Πα</span>
+							</header>
+							<header clockid="01" class="header item">
+								<span class="name">
+									<input type="checkbox" title="Έναρξη Αφύπνησης" name="Alarm01">
+									Καλημέρα ΣΚ
+								</span>
+								<span class="time"><time>09:00</time></span>
+								<span class="repeat">Σα-Κυ</span>
+							</header>
+				
+						</article>
+					</section>
+				</div>
+			</main>
+			<!--Stopwatch-->
+			<main class="stopwatch">
+				<div class="proc_page">
+					<section>
+						<footer>
+							<div class="lunalevit"></div>
+							<h2>Χρονοδιακόπτης</h2>
+							<div class="cpe-button-group">
+								<button class="cpe-button is-tertiary is-unaccented">
+								<span translate="no" class="cpe-icon cpe-icon-small material-icons">more_time</span>
+								<span>Νέος Χρονοδιακόπτης</span>
+								</button>
+							</div>
+						</footer>
+						<article>
+							<div class="grid-view">
+								<header stopwatchid="00" class="header item">
+									<span class="name" timer="00:01:00">
+											<span class="title">1 λεπτό</span>
+											<progress max="60000" value="0"></progress>
+									</span>
+									<div class="controls cpe-floating-button-group">
+										<button class="cpe-floating-button play" title="Έναρξη">
+											<span translate="no" class="cpe-icon cpe-icon-medium cpe-icon-small material-icons">play_arrow</span>
+										</button>
+										<div class="separator"></div>
+										<button class="cpe-floating-button is-alert-color delete" title="Στοπ">
+											<span translate="no" class="cpe-icon cpe-icon-medium cpe-icon-small material-icons">stop</span>
+										</button>
+									</div>
+								</header>
+								<header stopwatchid="01" class="header item">
+									<span class="name" timer="00:05:00">
+											<span class="title">5 λεπτά</span>
+											<progress max="300000" value="0"></progress>
+									</span>
+									<div class="controls cpe-floating-button-group">
+										<button class="cpe-floating-button play" title="Έναρξη">
+											<span translate="no" class="cpe-icon cpe-icon-medium cpe-icon-small material-icons">play_arrow</span>
+										</button>
+										<div class="separator"></div>
+										<button class="cpe-floating-button is-alert-color delete" title="Στοπ">
+											<span translate="no" class="cpe-icon cpe-icon-medium cpe-icon-small material-icons">stop</span>
+										</button>
+									</div>
+								</header>
+								<header stopwatchid="02" class="header item">
+									<span class="name" timer="00:10:00">
+											<span class="title">10 λεπτά</span>
+											<progress max="600000" value="0"></progress>
+									</span>
+									<div class="controls cpe-floating-button-group">
+										<button class="cpe-floating-button play" title="Έναρξη">
+											<span translate="no" class="cpe-icon cpe-icon-medium cpe-icon-small material-icons">play_arrow</span>
+										</button>
+										<div class="separator"></div>
+										<button class="cpe-floating-button is-alert-color delete" title="Στοπ">
+											<span translate="no" class="cpe-icon cpe-icon-medium cpe-icon-small material-icons">stop</span>
+										</button>
+									</div>
+								</header>
+							</div>
+						</article>
+					</section>
+				</div>
+			</main>
+			<!--Timer-->
+			<main class="timer">
+				<div class="proc_page">
+					<section>
+						<footer>
+							<div class="lunalevit"></div>
+							<h2>Χρονόμετρο</h2>
+							<div class="cpe-button-group">
+								<button class="cpe-button is-tertiary is-success-color">
+								<span translate="no" class="cpe-icon cpe-icon-small material-icons">play_arrow</span>
+								<span>Έναρξη</span>
+								</button>
+								<button class="cpe-button is-tertiary is-unaccented">
+								<span translate="no" class="cpe-icon cpe-icon-small material-icons">timer</span>
+								<span>Νέος Γύρος</span>
+								</button>
+								<button class="cpe-button is-tertiary is-alert-color">
+								<span translate="no" class="cpe-icon cpe-icon-small material-icons">undo</span>
+								<span>Επαναφορά</span>
+								</button>
+							</div>
+						</footer>
+						<header class="header upper timer">
+							<span class="name">
+								<h2>
+									<time>00:00:00.000</time>
+								</h2>
+							</span>
+						</header>
+						<header class="header upper">
+							<span class="id">
+								Γύρος
+							</span>
+							<span class="name">
+								Χρόνος
+							</span>
+						</header>
+						<article>
+							<header lapid="00" class="header item">
+								<span class="id">1</span>
+								<span class="name"><time>00:00:00.000</time></span>
+							</header>
+						</article>
+					</section>
+				</div>
+			</main>
+
+			<!--Settings-->
+			<main class="settings">
+				<div class="settings_page">
+					<section>
+						<div class="lunalevit"></div>
+						<header class="upper">
+							<h2>Ρυθμίσεις</h2>
+						</header>
+						<article>
+							<div class="fieldset AppTheme">
+								<fieldset>
+								<h2>
+								<span translate="no" class="cpe-icon material-icons">palette</span>
+								Θέμα Εφαρμογής
+								</h2>
+								<input type="radio" name="AppTheme" id="AppTheme01" onclick="colortheme('match-parent','light','match-parent','match-parent','duo')"><label for="AppTheme01">Αυτόματο</label>
+								<br>
+								<input type="radio" name="AppTheme" id="AppTheme02" onclick="colortheme('match-parent','dark','match-parent','match-parent','duo')"><label for="AppTheme02">Αυτόματο (Σκουρόχρωμο)</label>
+								<br>
+								<input type="radio" name="AppTheme" id="AppTheme03" onclick="colortheme('match-parent','light','match-parent','match-parent','solo')"><label for="AppTheme03">Ανοιχτόχρωμο</label>
+								<br>
+								<input type="radio" name="AppTheme" id="AppTheme04" onclick="colortheme('match-parent','dark','match-parent','match-parent','solo')"><label for="AppTheme04">Σκουρόχρωμο</label>
+								<div>
+								<input type="radio" name="AppTheme" id="AppTheme05"><label for="AppTheme05">Προσαρμοσμένο</label>
+								</div>
+								</fieldset>
+								<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει το θέμα συσκευής του Ρολογιού και Αφυπνήσεων</small></div>
+							</div>
+							
+							<div class="fieldset LandingPage">
+								<fieldset>
+								<h2>
+								<span translate="no" class="cpe-icon material-icons">home</span>
+								Σελίδα Προσγείωσης
+								</h2>
+								<input type="radio" name="LandingPage" id="LandingPage01" onclick="insertKey('ckal-default-page', 'clock')"><label for="LandingPage01">Ρολόι</label>
+								<br>
+								<input type="radio" name="LandingPage" id="LandingPage02" onclick="insertKey('ckal-default-page', 'alarms')"><label for="LandingPage02">Αφυπνήσεις</label>
+								<br>
+								<input type="radio" name="LandingPage" id="LandingPage03" onclick="insertKey('ckal-default-page', 'stopwatch')"><label for="LandingPage03">Χρονοδιακόπτης</label>
+								<br>
+								<input type="radio" name="LandingPage" id="LandingPage04" onclick="insertKey('ckal-default-page', 'timer')"><label for="LandingPage04">Χρονόμετρο</label>
+								</fieldset>
+								<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει την σελίδα που θα εμφανίζεται κάθε φορά που ξεκινά το Ρολόι και Αφυπνήσεις</small></div>
+							</div>
+
+							<div class="fieldset Sounds">
+								<fieldset>
+								<h2>
+								<span translate="no" class="cpe-icon material-icons">music_note</span>
+								Ήχοι
+								</h2>
+								<table>
+									<tr>
+										<td>
+											<label>Αφυπνήσεις:</label> 
+										</td>
+										<td>
+											<div class="cpe-button-group">
+												<input style="min-width:100%;" class="cpe-input alarms_music" autocomplete="off" value="A:/Evelution/Music/Alarm00.ogg" readonly>
+												<button class="cpe-button">Επιλογή...</button>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>Χρονοδιακόπτες:</label> 
+										</td>
+										<td>
+											<div class="cpe-button-group">
+												<input style="min-width:100%;" class="cpe-input stopwatches_music" autocomplete="off" value="A:/Evelution/Music/Alarm01.ogg" readonly>
+												<button class="cpe-button">Επιλογή...</button>
+											</div>
+										</td>
+									</tr>
+								</table>
+								</fieldset>
+								<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει τον ήχο που θα παίζει κάθε φορά που τελιώνει μια αφύπνηση ή ένας χρονοδιακόπτης</small></div>
+							</div>
+
+
+						</article>
+
+					</section>
+				</div>
+			</main>
+		</div>
+
+	</container>
+
+	</body>
+</html>
+<head>
+<title>Ρολόι και Αφυπνήσεις</title>
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="fonts.css"> <!-- Main CSS -->
+<link rel="stylesheet" type="text/css" href="CPE.css"> <!-- Main CSS -->
+<link rel="stylesheet" type="text/css" href="Mpisto.css"> <!-- Main CSS -->
+<link rel="stylesheet" type="text/css" href="VisualStyles.css"> <!-- Main CSS -->
+<link rel="stylesheet" type="text/css" href="VisualStyles_Extra.css"> <!-- Main CSS -->
+</head>
+
+
+<script src="jQuery.js"></script>
+<script src="UserAgents.js"></script>
+<script src="Chroma.js"></script>
+<script src="Mpisto.js"></script>
+<script src="Themes.js"></script>
+<script src="Debug.js"></script>
+
+<script>
+// Pollyfils for Options.html
+
+// Filters
+function HCa1() {
+    var x = document.getElementById("Handler");
+        x.className = x.className.replace(" filterA", "");
+        x.className = x.className.replace(" filterB", "");
+        x.className = x.className.replace(" filterC", "");
+        x.className = x.className.replace(" filterD", "");
+        x.className = x.className.replace(" filterE", "");
+        x.className = x.className.replace(" filterF", "");
+}
+
+function HCb1() {
+    var x = document.getElementById("Handler");
+    if (x.className.indexOf("filterA") == -1) {
+        x.className += " filterA";
+    }
+        x.className = x.className.replace(" filterB", "");
+        x.className = x.className.replace(" filterC", "");
+        x.className = x.className.replace(" filterD", "");
+        x.className = x.className.replace(" filterE", "");
+        x.className = x.className.replace(" filterF", "");
+}
+
+function HCc1() {
+    var x = document.getElementById("Handler");
+    if (x.className.indexOf("filterB") == -1) {
+        x.className += " filterB";
+    }
+        x.className = x.className.replace(" filterA", "");
+        x.className = x.className.replace(" filterC", "");
+        x.className = x.className.replace(" filterD", "");
+        x.className = x.className.replace(" filterE", "");
+        x.className = x.className.replace(" filterF", "");
+}
+
+function HCd1() {
+    var x = document.getElementById("Handler");
+    if (x.className.indexOf("filterC") == -1) {
+        x.className += " filterC";
+    }
+        x.className = x.className.replace(" filterA", "");
+        x.className = x.className.replace(" filterB", "");
+        x.className = x.className.replace(" filterD", "");
+        x.className = x.className.replace(" filterE", "");
+        x.className = x.className.replace(" filterF", "");
+}
+
+function HCe1() {
+    var x = document.getElementById("Handler");
+    if (x.className.indexOf("filterD") == -1) {
+        x.className += " filterD";
+    }
+        x.className = x.className.replace(" filterA", "");
+        x.className = x.className.replace(" filterB", "");
+        x.className = x.className.replace(" filterC", "");
+        x.className = x.className.replace(" filterE", "");
+        x.className = x.className.replace(" filterF", "");
+}
+
+function HCf1() {
+    var x = document.getElementById("Handler");
+    if (x.className.indexOf("filterE") == -1) {
+        x.className += " filterE";
+    }
+        x.className = x.className.replace(" filterA", "");
+        x.className = x.className.replace(" filterB", "");
+        x.className = x.className.replace(" filterC", "");
+        x.className = x.className.replace(" filterD", "");
+        x.className = x.className.replace(" filterF", "");
+}
+
+function HCg1() {
+    var x = document.getElementById("Handler");
+    if (x.className.indexOf("filterF") == -1) {
+        x.className += " filterF";
+    }
+        x.className = x.className.replace(" filterA", "");
+        x.className = x.className.replace(" filterB", "");
+        x.className = x.className.replace(" filterC", "");
+        x.className = x.className.replace(" filterD", "");
+        x.className = x.className.replace(" filterE", "");
+}
+
+
+// Restore High Contrast
+
+// High Contast Themes
+function BarSwitch() {
+    var x = document.getElementById("Handler");
+    if (x.className.indexOf("bar-hidden") == -1) {
+        x.className += " bar-hidden";
+    } else {
+        x.className = x.className.replace(" bar-hidden", "");
+    }
+}
+
+
+
+
+
+
+
+
+/* Mobile Only CSS */
+if (navigator.userAgent.match("Mobile")) {
+document.getElementById("Handler").className += " phone"
+}
+
+
+/* Dropdown
+function dropFunction() {
+    var x = document.getElementById("myDIV");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+*/
+</script>
+
+
+<!--
+    <div class="cpe-dropdown">
+      <a class="link">Wikis</a>
+      <div class="cpe-dropdown-content">
+        <ul class="cpe-list cpe-is-linked">
+        </ul>
+      </div>
+    </div>
+-->
+
+
+<!-- Past Notifications
+
+           <li class="notification reply">
+           <a>
+           <div class="wrapper">
+           <img class="mpisto-avatar" src="Zekzphire.png"></img><div><h3>Improve your viewing experience with High Contrast</h3> <br><h6>By Zekzphire<time>26 Feb 2018</time></h6></div>
+           </div>
+           </a>
+           </li>
+           
+           <li class="notification">
+           <a>
+           <div class="wrapper">
+           <img class="mpisto-avatar" src="HM100.png"></img><div><h3>Working with wikis</h3> <br><h6>By HM100<time>24 Feb 2018</time></h6></div>
+           </div>
+           </a>
+           </li>
+
+-->
