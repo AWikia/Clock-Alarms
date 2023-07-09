@@ -1201,6 +1201,13 @@ line-height:16px;
 	height:25px;
 }
 
+.proc_page .name .alarm-name {
+	text-align:left;
+	padding:0 0 0 5px;
+	justify-content:flex-start;
+	flex:1;
+}
+
 .touch-events .clock_alarm .proc_page .upper span {
 	height:30px;
 }
@@ -1265,6 +1272,21 @@ main.clock .proc_page .clock_time date {
 	font-size:250%;
 }
 
+@media only screen and (max-width:639px) {
+	.proc_page .header time {
+		font-size:200%;
+	}
+
+	.clock_alarm .proc_page .upper.timer .name time {
+		font-size:250%;
+	}
+
+	.proc_page .time {
+		width:80px;
+	}
+}
+
+
 @media only screen and (max-width:889px) {
 	.tabs a  {
 		font-size:0;
@@ -1278,7 +1300,7 @@ main.clock .proc_page .clock_time date {
 		font-size:min(calc(50vw - 50px), calc(100vh - 50px));
 		font-size:min(calc(50dvw - 50px), calc(100dvh - 50px));
 	}
-
+	
 }
 
 
