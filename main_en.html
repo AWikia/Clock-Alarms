@@ -175,7 +175,7 @@
 							<div class="lunalevit"></div>
 							<h2>Stopwatch</h2>
 							<div class="cpe-button-group">
-								<button class="cpe-button is-tertiary is-unaccented">
+								<button class="cpe-button is-tertiary is-unaccented" onclick="NewStopwatch()">
 								<span translate="no" class="cpe-icon cpe-icon-small material-icons">more_time</span>
 								<span>New Stopwatch</span>
 								</button>
@@ -189,11 +189,11 @@
 											<progress max="60000" value="0"></progress>
 									</span>
 									<div class="controls cpe-floating-button-group">
-										<button class="cpe-floating-button play" title="Start">
+										<button class="cpe-floating-button play" onclick="toggleStopwatch(0)" title="Start">
 											<span translate="no" class="cpe-icon cpe-icon-medium cpe-icon-small material-icons">play_arrow</span>
 										</button>
 										<div class="separator"></div>
-										<button class="cpe-floating-button is-alert-color delete" title="Stop">
+										<button class="cpe-floating-button is-alert-color delete" onclick="StopStopwatch(0)" title="Stop">
 											<span translate="no" class="cpe-icon cpe-icon-medium cpe-icon-small material-icons">stop</span>
 										</button>
 									</div>
@@ -204,11 +204,11 @@
 											<progress max="300000" value="0"></progress>
 									</span>
 									<div class="controls cpe-floating-button-group">
-										<button class="cpe-floating-button play" title="Start">
+										<button class="cpe-floating-button play" onclick="toggleStopwatch(1)" title="Start">
 											<span translate="no" class="cpe-icon cpe-icon-medium cpe-icon-small material-icons">play_arrow</span>
 										</button>
 										<div class="separator"></div>
-										<button class="cpe-floating-button is-alert-color delete" title="Stop">
+										<button class="cpe-floating-button is-alert-color delete" onclick="StopStopwatch(1)" title="Stop">
 											<span translate="no" class="cpe-icon cpe-icon-medium cpe-icon-small material-icons">stop</span>
 										</button>
 									</div>
@@ -219,11 +219,11 @@
 											<progress max="600000" value="0"></progress>
 									</span>
 									<div class="controls cpe-floating-button-group">
-										<button class="cpe-floating-button play" title="Start">
+										<button class="cpe-floating-button play" onclick="toggleStopwatch(2)" title="Start">
 											<span translate="no" class="cpe-icon cpe-icon-medium cpe-icon-small material-icons">play_arrow</span>
 										</button>
 										<div class="separator"></div>
-										<button class="cpe-floating-button is-alert-color delete" title="Stop">
+										<button class="cpe-floating-button is-alert-color delete" onclick="StopStopwatch(2)" title="Stop">
 											<span translate="no" class="cpe-icon cpe-icon-medium cpe-icon-small material-icons">stop</span>
 										</button>
 									</div>

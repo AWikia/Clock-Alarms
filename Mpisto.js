@@ -46,6 +46,7 @@
 		window.ckal_oldHour =  hour;
 		window.ckal_oldMin =  min;
 		setInterval(ChangeDate, 1000);
+		stopwatches=[]
 		/* Timer Page */
 		window.ckal_totaltime = 0;
 		window.ckal_timertime = 0;
@@ -53,6 +54,7 @@
 
 })();
 
+/* Clock */
 
 function ChangeDate() {
 	date = new Date();
@@ -67,6 +69,110 @@ function ChangeDate() {
 
 }
 
+/* Stopwatch */
+function FormatTimeMini(value) { // Used for Stopwatches
+	hours = String( Math.floor( value / 3600000 ) ).padStart(2, '0');
+	mins = String( Math.floor( (value / 60000) % 60 ) ).padStart(2, '0');
+	secs = String( Math.floor( (value / 1000) % 60 ) ).padStart(2, '0');
+	return hours + ":" + mins + ":" + secs; 
+}
+
+function toggleStopwatch(id=0, starttext="Start", pausetext="Pause",sw_endtext="Stopwatch has been finished!!!") {
+	inactive_stopwatch = ((stopwatches[id] == undefined) || stopwatches[id] == 0) // Toggles Timer State (true = ticking | false = still)
+	elem = document.querySelector("main.stopwatch .proc_page article header[stopwatchid='" + String( id ).padStart(2, '0') + "'] button.play");
+	elemIcon = document.querySelector("main.stopwatch .proc_page article header[stopwatchid='" + String( id ).padStart(2, '0') + "'] button.play .cpe-icon");
+	elemSpan = document.querySelector("main.stopwatch .proc_page article header[stopwatchid='" + String( id ).padStart(2, '0') + "'] span.name");
+	elemProgress = document.querySelector("main.stopwatch .proc_page article header[stopwatchid='" + String( id ).padStart(2, '0') + "'] progress");
+	elemHeader = document.querySelector("main.stopwatch .proc_page article header[stopwatchid='" + String( id ).padStart(2, '0') + "']");
+	if (inactive_stopwatch) {
+		if (stopwatches[id] == undefined) {
+		elemProgress.setAttribute('value',elemHeader.getAttribute('time'));
+		elemProgress.style.setProperty("--range-percent",  (( ((elemProgress.getAttribute('value')) - 0 ) * 100) / (elemProgress.getAttribute('max') - 0) ) + '%'  );
+		}
+		stopwatches[id] = setInterval(countTimer, 5, id, starttext,sw_endtext);
+		/* Turn Pause Button back to Start */
+		elem.classList.add('is-pause-color');
+		elemIcon.innerHTML = 'pause';
+		elem.setAttribute('title',pausetext);
+	} else {
+		clearInterval(stopwatches[id])
+		stopwatches[id] = 0;
+		/* Turn Pause Button back to Start */
+		elem.classList.remove('is-pause-color');
+		elemIcon.innerHTML = 'play_arrow';
+		elem.setAttribute('title',starttext);
+	}
+}
+
+function countTimer(id,starttext='Start', sw_endtext='Stopwatch has been finished!!!') {
+	elemSpan = document.querySelector("main.stopwatch .proc_page article header[stopwatchid='" + String( id ).padStart(2, '0') + "'] span.name");
+	elemProgress = document.querySelector("main.stopwatch .proc_page article header[stopwatchid='" + String( id ).padStart(2, '0') + "'] progress");
+	// Exclusive
+	elemTitle = document.querySelector("main.stopwatch .proc_page article header[stopwatchid='" + String( id ).padStart(2, '0') + "'] span.name .title");
+	date = document.querySelector('main.clock .proc_page .clock_time time').innerHTML;
+	/* Update Time */
+	newtime = elemProgress.getAttribute('value') - 5;
+	elemProgress.setAttribute('value',newtime);
+	elemProgress.style.setProperty("--range-percent",  (( ((elemProgress.getAttribute('value')) - 0 ) * 100) / (elemProgress.getAttribute('max') - 0) ) + '%'  );
+	elemSpan.setAttribute('timer',FormatTimeMini(elemProgress.getAttribute('value')));
+	/* If time expires, stop stopwatch */
+	if (newtime == 0) {
+		playAudio('Sounds/Alarm01.mp3');
+		AddFloatingBanner('<big><b>' + sw_endtext + '</b></big><br>' + elemTitle.innerHTML + '<br>' + date ,'success');
+		StopStopwatch(id,starttext);
+	}
+}
+
+function StopStopwatch(id=0, starttext="Start") {
+	elem = document.querySelector("main.stopwatch .proc_page article header[stopwatchid='" + String( id ).padStart(2, '0') + "'] button.play");
+	elemIcon = document.querySelector("main.stopwatch .proc_page article header[stopwatchid='" + String( id ).padStart(2, '0') + "'] button.play .cpe-icon");
+	elemSpan = document.querySelector("main.stopwatch .proc_page article header[stopwatchid='" + String( id ).padStart(2, '0') + "'] span.name");
+	elemProgress = document.querySelector("main.stopwatch .proc_page article header[stopwatchid='" + String( id ).padStart(2, '0') + "'] progress");
+	elemHeader = document.querySelector("main.stopwatch .proc_page article header[stopwatchid='" + String( id ).padStart(2, '0') + "']");
+	/* Clear Timer Data */
+	clearInterval(stopwatches[id])
+	stopwatches[id] = null;
+	elemProgress.setAttribute('value',0);
+	elemProgress.style.setProperty("--range-percent",  (( ((elemProgress.getAttribute('value')) - 0 ) * 100) / (elemProgress.getAttribute('max') - 0) ) + '%'  );
+	elemSpan.setAttribute('timer',FormatTimeMini(elemHeader.getAttribute('time')));
+	/* Turn Pause Button back to Start */
+	elem.classList.remove('is-pause-color');
+	elemIcon.innerHTML = 'play_arrow';
+	elem.setAttribute('title',starttext);
+	document.querySelector('.focus-overlay').focus();
+
+
+}
+
+function NewStopwatch(starttext="Start", pausetext="Pause", stoptext="Stop",sw_endtext="Stopwatch has been finished!!!",namehint="Enter Name:",timehint="Enter time: (Format: HH:MM:SS)") {
+	var name = prompt(namehint);
+	var time = prompt(timehint).split(":");
+	var totaltime = Math.floor( time[0] * 3600000 ) + Math.floor( (time[1] % 60) * 60000 ) + Math.floor( (time[2] % 60) * 1000 );
+	str = 	'<header stopwatchid="' + document.querySelectorAll("main.stopwatch .proc_page section article .grid-view .header[stopwatchid]").length.toString().padStart(2, '0') + '" time="' + totaltime + '" class="header item">' +
+				'<span class="name" timer="' + FormatTimeMini(totaltime) + '">' +
+					'<span class="title">' + name + '</span>' +
+					'<progress max="' + totaltime + '" value="0" style="--range-percent: 0%;"></progress>' +
+				'</span>' +
+				'<div class="controls cpe-floating-button-group">' +
+					'<button class="cpe-floating-button play" onclick="toggleStopwatch(' + document.querySelectorAll("main.stopwatch .proc_page section article .grid-view .header[stopwatchid]").length + ',\'' + starttext + ' \',\'' + pausetext + '\',\'' + sw_endtext + '\')" title="' + starttext + '">' +
+						'<span translate="no" class="cpe-icon cpe-icon-medium cpe-icon-small material-icons">play_arrow</span>' +
+					'</button>' +
+					'<div class="separator"></div>' +
+					'<button class="cpe-floating-button is-alert-color delete" onclick="StopStopwatch(' + document.querySelectorAll("main.stopwatch .proc_page section article .grid-view .header[stopwatchid]").length +',\'' + starttext + '\')" title="' + stoptext + '">' +
+						'<span translate="no" class="cpe-icon cpe-icon-medium cpe-icon-small material-icons">stop</span>' +
+					'</button>' +
+				'</div>' +
+			'</header>'
+	document.querySelector("main.stopwatch .proc_page section article .grid-view").insertAdjacentHTML('beforeend',str);
+
+}
+
+function playAudio(audiofile) {
+  var audio = new Audio(audiofile);
+  audio.play();
+}
+
+/* Timer */
 function FormatTime(value) {
 	hours = String( Math.floor( value / 3600000 ) ).padStart(2, '0');
 	mins = String( Math.floor( (value / 60000) % 60 ) ).padStart(2, '0');
@@ -74,6 +180,7 @@ function FormatTime(value) {
 	ms = String( (value % 1000) ).padStart(3, '0');
 	return hours + ":" + mins + ":" + secs + "." + ms; 
 }
+
 
 function toggleTimer(starttext="Start", pausetext="Pause") {
 	window.ckal_timerbegin = !window.ckal_timerbegin // Toggles Timer State (true = ticking | false = still)
