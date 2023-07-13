@@ -22,6 +22,12 @@
 	if (getKey('ckal-default-page') === '-1') {
 		insertKey('ckal-default-page', 'clock' );
 	}
+	if (getKey('ckal-alarm-sound') === '-1') {
+		insertKey('ckal-alarm-sound', '05' );
+	}
+	if (getKey('ckal-stopwatch-sound') === '-1') {
+		insertKey('ckal-stopwatch-sound', '13' );
+	}
 		/* Active Theme */
 		if (getKey('device-theme') === 'light' ) {
 			active_tm_theme =  (getKey('color-style-behavior') === 'duo' ) ? 'auto' : 'light'
@@ -46,12 +52,22 @@
 		window.ckal_oldHour =  hour;
 		window.ckal_oldMin =  min;
 		setInterval(ChangeDate, 1000);
-		stopwatches=[]
+		/* Alarms Page */
+		alarms=[];
+		alarm_sound = getKey('ckal-alarm-sound');
+		$('.cpe-dropdown.cpe-select.alarm_sounds').on( "blur",function() { insertKey('ckal-alarm-sound', getAlarmSound() ) });
+		document.querySelector('.cpe-dropdown.cpe-select.alarm_sounds .cpe-select__value').setAttribute("value", getKey('ckal-alarm-sound'));
+		document.querySelector('.cpe-dropdown.cpe-select.alarm_sounds .cpe-select__value').innerHTML = getAlarmSoundName();
+		/* Stopwatch Page */
+		stopwatches=[];
+		stopwatch_sound = getKey('ckal-stopwatch-sound');
+		$('.cpe-dropdown.cpe-select.stopwatch_sounds').on( "blur",function() { insertKey('ckal-stopwatch-sound', getStopwatchSound() ) });
+		document.querySelector('.cpe-dropdown.cpe-select.stopwatch_sounds .cpe-select__value').setAttribute("value", getKey('ckal-stopwatch-sound'));
+		document.querySelector('.cpe-dropdown.cpe-select.stopwatch_sounds .cpe-select__value').innerHTML = getStopwatchSoundName();
 		/* Timer Page */
 		window.ckal_totaltime = 0;
 		window.ckal_timertime = 0;
 		window.ckal_timerbegin = false;
-
 })();
 
 /* Clock */
@@ -68,6 +84,61 @@ function ChangeDate() {
 	}
 
 }
+
+/* Alarms */
+function toggleAlarm(id=0,a_endtext="Alarm!!!") {
+	inactive_alarm = (alarms[id] == undefined) // Toggles Timer State (true = ticking | false = still)
+	elem = document.querySelector("main.alarms .proc_page article header[clockid='" + String( id ).padStart(2, '0') + "'] input[type='checkbox']");
+	if (inactive_alarm) {
+		elem.checked = true;
+		alarms[id] = setInterval(countAlarm, 1000, id, a_endtext);
+	} else {
+		elem.checked = false;
+		clearInterval(alarms[id])
+		alarms[id] = null;
+	}
+}
+
+function countAlarm(id,a_endtext="Alarm!!!") {
+	// Exclusive
+	elemTitle = document.querySelector("main.alarms .proc_page article header[clockid='" + String( id ).padStart(2, '0') + "'] span.name .alarm-name > label");
+	elemDate = document.querySelector("main.alarms .proc_page article header[clockid='" + String( id ).padStart(2, '0') + "'] span.time > time").innerHTML;
+	date = document.querySelector('main.clock .proc_page .clock_time time').innerHTML;
+	if (elemDate == date) {
+		playAudio('Sounds/Alarm' + getAlarmSound() + '.mp3');
+		AddFloatingBanner('<big><b>' + a_endtext + '</b></big><br>' + elemTitle.innerHTML + '<br>' + date ,'success');
+		elem.checked = false;
+		clearInterval(alarms[id])
+		alarms[id] = null;
+	}
+
+}
+
+function NewAlarm(starttext="Start Alarm",a_endtext="Alarm!!!",namehint="Enter Name:",timehint="Enter time: (Format: HH:MM)") {
+	var name = prompt(namehint);
+	var time = prompt(timehint).split(":");
+	var totaltime = time[0].toString().padStart(2, '0') + ':' + time[1].toString().padStart(2, '0');
+	str = 	'<header clockid="' + document.querySelectorAll("main.alarms .proc_page section article .header[clockid]").length.toString().padStart(2, '0') + '" class="header item">' +
+				'<span class="name">' +
+					'<input type="checkbox" title="' + starttext + '" onclick="toggleAlarm(' + document.querySelectorAll("main.alarms .proc_page section article .header[clockid]").length + ',\'' + a_endtext + '\')" id="Alarm' + document.querySelectorAll("main.alarms .proc_page section article .header[clockid]").length.toString().padStart(2, '0') + '">' +
+					'<span class="alarm-name"><label for="Alarm' +  document.querySelectorAll("main.alarms .proc_page section article .header[clockid]").length.toString().padStart(2, '0') + '">' + name + '</label></span>' +
+				'</span>' +
+				'<span class="time"><time>' + totaltime + '</time></span>' +
+				'<span class="repeat">-//-</span>' +
+			'</header>'
+	document.querySelector("main.alarms .proc_page section article").insertAdjacentHTML('beforeend',str);
+
+}
+
+function getAlarmSound() {
+return document.querySelector('.cpe-dropdown.cpe-select.alarm_sounds .cpe-select__value').getAttribute("value");
+}
+
+function getAlarmSoundName() {
+	return document.querySelector(".cpe-dropdown.cpe-select.alarm_sounds .cpe-dropdown__content > .cpe-list li:nth-child(" + (parseInt(getAlarmSound()) + 1) + ") > a").innerHTML;
+}
+
+
 
 /* Stopwatch */
 function FormatTimeMini(value) { // Used for Stopwatches
@@ -89,7 +160,7 @@ function toggleStopwatch(id=0, starttext="Start", pausetext="Pause",sw_endtext="
 		elemProgress.setAttribute('value',elemHeader.getAttribute('time'));
 		elemProgress.style.setProperty("--range-percent",  (( ((elemProgress.getAttribute('value')) - 0 ) * 100) / (elemProgress.getAttribute('max') - 0) ) + '%'  );
 		}
-		stopwatches[id] = setInterval(countTimer, 5, id, starttext,sw_endtext);
+		stopwatches[id] = setInterval(countTimer, 10, id, starttext,sw_endtext);
 		/* Turn Pause Button back to Start */
 		elem.classList.add('is-pause-color');
 		elemIcon.innerHTML = 'pause';
@@ -111,13 +182,13 @@ function countTimer(id,starttext='Start', sw_endtext='Stopwatch has been finishe
 	elemTitle = document.querySelector("main.stopwatch .proc_page article header[stopwatchid='" + String( id ).padStart(2, '0') + "'] span.name .title");
 	date = document.querySelector('main.clock .proc_page .clock_time time').innerHTML;
 	/* Update Time */
-	newtime = elemProgress.getAttribute('value') - 5;
+	newtime = elemProgress.getAttribute('value') - 10;
 	elemProgress.setAttribute('value',newtime);
 	elemProgress.style.setProperty("--range-percent",  (( ((elemProgress.getAttribute('value')) - 0 ) * 100) / (elemProgress.getAttribute('max') - 0) ) + '%'  );
 	elemSpan.setAttribute('timer',FormatTimeMini(elemProgress.getAttribute('value')));
 	/* If time expires, stop stopwatch */
 	if (newtime == 0) {
-		playAudio('Sounds/Alarm01.mp3');
+		playAudio('Sounds/Alarm' + getStopwatchSound() + '.mp3');
 		AddFloatingBanner('<big><b>' + sw_endtext + '</b></big><br>' + elemTitle.innerHTML + '<br>' + date ,'success');
 		StopStopwatch(id,starttext);
 	}
@@ -172,12 +243,21 @@ function playAudio(audiofile) {
   audio.play();
 }
 
+function getStopwatchSound() {
+return document.querySelector('.cpe-dropdown.cpe-select.stopwatch_sounds .cpe-select__value').getAttribute("value");
+}
+
+function getStopwatchSoundName() {
+	return document.querySelector(".cpe-dropdown.cpe-select.stopwatch_sounds .cpe-dropdown__content > .cpe-list li:nth-child(" + (parseInt(getStopwatchSound()) + 1) + ") > a").innerHTML;
+}
+
+
 /* Timer */
 function FormatTime(value) {
 	hours = String( Math.floor( value / 3600000 ) ).padStart(2, '0');
 	mins = String( Math.floor( (value / 60000) % 60 ) ).padStart(2, '0');
 	secs = String( Math.floor( (value / 1000) % 60 ) ).padStart(2, '0');
-	ms = String( (value % 1000) ).padStart(3, '0');
+	ms = String( Math.floor( (value / 10) % 100 ) ).padStart(2, '0');
 	return hours + ":" + mins + ":" + secs + "." + ms; 
 }
 
@@ -188,7 +268,7 @@ function toggleTimer(starttext="Start", pausetext="Pause") {
 	elemIcon = document.querySelector("main.timer .proc_page footer button.timer-start .cpe-icon");
 	elemSpan = document.querySelector("main.timer .proc_page footer button.timer-start .cpe-icon + span");
 	if (window.ckal_timerbegin) {
-		timerInterval = setInterval(countInterval, 5);
+		timerInterval = setInterval(countInterval, 10);
 		/* Turn Start Button to Pause */
 		elem.classList.replace('is-success-color', 'is-pause-color');
 		elemIcon.innerHTML = 'pause';
@@ -210,8 +290,8 @@ function toggleTimer(starttext="Start", pausetext="Pause") {
 }
 
 function countInterval() {
-	window.ckal_totaltime = window.ckal_totaltime + 5;
-	window.ckal_timertime = window.ckal_timertime + 5;
+	window.ckal_totaltime = window.ckal_totaltime + 10;
+	window.ckal_timertime = window.ckal_timertime + 10;
 	document.querySelector('main.timer .proc_page .upper.timer time').innerHTML = FormatTime(window.ckal_totaltime);
 }
 
