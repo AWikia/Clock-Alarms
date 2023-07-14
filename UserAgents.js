@@ -172,6 +172,9 @@ function UpdateRangeInputs() {
 	/* DITTO */
 	document.querySelector("body").addEventListener("mouseenter", ( function(e) { CheckTheme(); } ) );
 	document.querySelector("body").addEventListener("mouseleave", ( function(e) { DropDownUpdate(); CheckTheme(); } ) );
+
+	document.querySelector("body").addEventListener("blur", ( function(e) { UpdateThemeColorMetaTag(); } ) );
+	document.querySelector("body").addEventListener("focus", ( function(e) { UpdateThemeColorMetaTag(); } ) );
 	
 
 	/* END DITTO */
