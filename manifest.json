@@ -1,6 +1,7 @@
 ﻿{
     "name": "Evelution OS Clock and Alarms",
     "short_name": "Clock and Alarms",
+	"display": "standalone",
     "icons": [
         {
             "sizes": "114x114",
