@@ -28,6 +28,9 @@
 	if (getKey('ckal-stopwatch-sound') === '-1') {
 		insertKey('ckal-stopwatch-sound', '13' );
 	}
+	if (getKey('ckal-no-screensaver') === '-1') {
+		insertKey('ckal-no-screensaver', 'false' );
+	}
 		/* Active Theme */
 		if (getKey('device-theme') === 'light' ) {
 			active_tm_theme =  (getKey('color-style-behavior') === 'duo' ) ? 'auto' : 'light'
@@ -49,9 +52,15 @@
 		min = date.getMinutes().toString().padStart(2, '0');
 		document.querySelector('main.clock .proc_page .clock_time time').innerHTML = hour + ':' +  min;
 		document.querySelector('main.clock .proc_page .clock_time date').innerHTML = date.getDate().toString().padStart(2, '0') + '/' +  (date.getMonth() + 1).toString().padStart(2, '0') + '/' +  date.getFullYear().toString().padStart(4, '0');
+		document.getElementById("Windowing01").checked=(getKey('ckal-no-screensaver') == 'true');
 		window.ckal_oldHour =  hour;
 		window.ckal_oldMin =  min;
 		setInterval(ChangeDate, 1000);
+		setInterval(CheckClockScreensaver, 1000);
+		clockinterval = null;
+		window.ckal_sstime = 0;
+		window.ckal_ssactive = false;
+		document.querySelector("body").addEventListener("mousemove", ( function(e) { ClearClockScreensaver(); } ) );
 		/* Alarms Page */
 		alarms=[];
 		alarm_sound = getKey('ckal-alarm-sound');
@@ -83,6 +92,47 @@ function ChangeDate() {
 		window.ckal_oldMin =  min;
 	}
 
+}
+
+function CheckClockScreensaver() {
+	if ( (document.querySelector('body').getAttribute("page") == 'clock') && !((window.ckal_ssactive) || (document.getElementById("Windowing01").checked)) ) {
+		window.ckal_sstime = window.ckal_sstime + 1;
+		if (window.ckal_sstime > 89) {
+			BeginClockScreensaver();
+		}
+	}
+}
+
+function BeginClockScreensaver() {
+	if (document.querySelector('body').getAttribute("page") == 'clock') {
+		window.ckal_ssactive = true;
+		document.querySelector('body').classList.add("clock_screensaver");
+		clockinterval = setInterval(MoveClock,20000);
+	} 
+}
+
+function MoveClock() {
+		x = window.innerWidth - document.querySelector("main.clock .proc_page .clock_time").clientWidth - 2
+		y = window.innerHeight - document.querySelector("main.clock .proc_page .clock_time").clientHeight - 2
+		document.querySelector("main.clock .proc_page .clock_time").style.setProperty("--x", getRandomInt(x) + 'px');
+		document.querySelector("main.clock .proc_page .clock_time").style.setProperty("--y", getRandomInt(y) + 'px');
+}
+
+function ClearClockScreensaver() {
+	window.ckal_sstime = 0;
+	if (window.ckal_ssactive) {
+		clearInterval(clockinterval);
+		clockinterval = null;
+		window.ckal_ssactive = false;
+		document.querySelector('body').classList.remove("clock_screensaver");
+		document.querySelector("main.clock .proc_page .clock_time").style.removeProperty("--x");
+		document.querySelector("main.clock .proc_page .clock_time").style.removeProperty("--y");
+	}
+}
+
+function toggleScreensaver() {
+	nosaver = (document.getElementById("Windowing01").checked) ? 'true' : 'false';
+	insertKey('ckal-no-screensaver',nosaver);
 }
 
 /* Alarms */

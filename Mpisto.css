@@ -1278,6 +1278,38 @@ main.clock .proc_page .clock_time date {
 	font-size:250%;
 }
 
+/* Clock Screensaver */
+.clock_screensaver .tabs,
+.clock_screensaver .proc_page footer {
+    display:none;
+}
+
+.clock_screensaver .tabs-with-page {
+    grid-template-columns:auto;
+    background-color:#0c0c0c;
+}
+
+.clock_screensaver main {
+	border:0;
+}
+
+.clock_screensaver main .proc_page article {
+	background-color:#0c0c0c;
+	color:var(--screensaver-highlight-color);
+}
+
+.clock_screensaver main.clock .proc_page .clock_time {
+	position:absolute;
+	top:var(--y,0);
+	left:var(--x,0);
+	width:auto;
+	height:auto;
+}
+
+.clock_screensaver .proc_page {
+	overflow:hidden;
+}
+
 @media only screen and (max-width:511px) {
 	.proc_page .header time {
 		font-size:200%;
@@ -1388,6 +1420,3 @@ main.clock .proc_page .clock_time date {
 .settings_page input#AppTheme05:not(:checked) + label { 
     display:none; 
 }
-
-
-/* Misc */
