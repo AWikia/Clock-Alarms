@@ -28,8 +28,14 @@
 	if (getKey('ckal-stopwatch-sound') === '-1') {
 		insertKey('ckal-stopwatch-sound', '13' );
 	}
-	if (getKey('ckal-no-screensaver') === '-1') {
-		insertKey('ckal-no-screensaver', 'false' );
+	if (getKey('ckal-screensaver-color') === '-1') {
+		insertKey('ckal-screensaver-color', 'highlight' );
+	}
+	if (getKey('ckal-screensaver-waiting') === '-1') {
+		insertKey('ckal-screensaver-waiting', '1' );
+	}
+	if (getKey('ckal-screensaver-refresh') === '-1') {
+		insertKey('ckal-screensaver-refresh', '1' );
 	}
 		/* Active Theme */
 		if (getKey('device-theme') === 'light' ) {
@@ -46,20 +52,29 @@
 		default_page = getKey('ckal-default-page');
 		$('body').attr("page",  default_page);
 		document.getElementById("LandingPage" + ['01','02','03','04'][ ['clock','alarms','stopwatch','timer'].indexOf(default_page) ]).checked=true;
-//Clock
+		/* Clock Page */
 		date = new Date();
 		hour = date.getHours().toString().padStart(2, '0');
 		min = date.getMinutes().toString().padStart(2, '0');
 		document.querySelector('main.clock .proc_page .clock_time time').innerHTML = hour + ':' +  min;
 		document.querySelector('main.clock .proc_page .clock_time date').innerHTML = date.getDate().toString().padStart(2, '0') + '/' +  (date.getMonth() + 1).toString().padStart(2, '0') + '/' +  date.getFullYear().toString().padStart(4, '0');
-		document.getElementById("Windowing01").checked=(getKey('ckal-no-screensaver') == 'true');
 		window.ckal_oldHour =  hour;
 		window.ckal_oldMin =  min;
 		setInterval(ChangeDate, 1000);
+		// Screensaver
+		ss_waitingtime = getKey('ckal-screensaver-waiting');
+		ss_refreshrate = getKey('ckal-screensaver-refresh');
+		document.getElementById("ClockScreensaver_WaitingTime" + ['01','02','03','04'][ ['0','1','2','3'].indexOf(ss_waitingtime) ]).checked=true;
+		document.getElementById("ClockScreensaver_UpdateSpeed" + ['01','02','03','04'][ ['0','1','2','3'].indexOf(ss_refreshrate) ]).checked=true;
+		document.getElementById("ClockScreensaver03").checked=(getKey('ckal-screensaver-color') != 'highlight');
+		$('body').attr("clockcolor",  getKey('ckal-screensaver-color'));
 		setInterval(CheckClockScreensaver, 1000);
 		clockinterval = null;
 		window.ckal_sstime = 0;
 		window.ckal_ssactive = false;
+		window.ckal_sswaiting = [45,90,180,0][ss_waitingtime];
+		window.ckal_ssrefresh = [10,20,30,0][ss_refreshrate];
+		
 		document.querySelector("body").addEventListener("mousemove", ( function(e) { ClearClockScreensaver(); } ) );
 		/* Alarms Page */
 		alarms=[];
@@ -95,9 +110,9 @@ function ChangeDate() {
 }
 
 function CheckClockScreensaver() {
-	if ( (document.querySelector('body').getAttribute("page") == 'clock') && !((window.ckal_ssactive) || (document.getElementById("Windowing01").checked)) ) {
+	if ( (document.querySelector('body').getAttribute("page") == 'clock') && !((window.ckal_ssactive) || (window.ckal_sswaiting == 0)) ) {
 		window.ckal_sstime = window.ckal_sstime + 1;
-		if (window.ckal_sstime > 89) {
+		if (window.ckal_sstime > (window.ckal_sswaiting - 1)) {
 			BeginClockScreensaver();
 		}
 	}
@@ -105,9 +120,15 @@ function CheckClockScreensaver() {
 
 function BeginClockScreensaver() {
 	if (document.querySelector('body').getAttribute("page") == 'clock') {
+		xpos = document.querySelector("main.clock .proc_page .clock_time").getBoundingClientRect().x
+		ypos = document.querySelector("main.clock .proc_page .clock_time").getBoundingClientRect().y
+		document.querySelector("main.clock .proc_page .clock_time").style.setProperty("--x", xpos + 'px');
+		document.querySelector("main.clock .proc_page .clock_time").style.setProperty("--y", ypos + 'px');
 		window.ckal_ssactive = true;
 		document.querySelector('body').classList.add("clock_screensaver");
-		clockinterval = setInterval(MoveClock,20000);
+		if (ckal_ssrefresh != 0) {
+			clockinterval = setInterval(MoveClock,ckal_ssrefresh*1000);
+		}
 	} 
 }
 
@@ -121,7 +142,9 @@ function MoveClock() {
 function ClearClockScreensaver() {
 	window.ckal_sstime = 0;
 	if (window.ckal_ssactive) {
-		clearInterval(clockinterval);
+		if (ckal_ssrefresh != 0) {
+			clearInterval(clockinterval);
+		}
 		clockinterval = null;
 		window.ckal_ssactive = false;
 		document.querySelector('body').classList.remove("clock_screensaver");
@@ -130,9 +153,20 @@ function ClearClockScreensaver() {
 	}
 }
 
-function toggleScreensaver() {
-	nosaver = (document.getElementById("Windowing01").checked) ? 'true' : 'false';
-	insertKey('ckal-no-screensaver',nosaver);
+function SetSSWaitingTime(speed=1) {
+	insertKey('ckal-screensaver-waiting', speed );
+	window.ckal_sswaiting = [45,90,180,0][getKey('ckal-screensaver-waiting')]
+}
+
+function SetSSUpdateSpeed(speed=1) {
+	insertKey('ckal-screensaver-refresh', speed );
+	window.ckal_ssrefresh = [10,20,30,0][getKey('ckal-screensaver-refresh')]
+}
+
+function toggleScreensaverColor() {
+	nosaver = (document.getElementById("ClockScreensaver03").checked) ? 'white' : 'highlight';
+	insertKey('ckal-screensaver-color',nosaver);
+	document.querySelector('body').setAttribute("clockcolor",  getKey('ckal-screensaver-color'));
 }
 
 /* Alarms */

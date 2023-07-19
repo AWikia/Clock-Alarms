@@ -399,13 +399,46 @@
 								<div style="margin:5px 0;"><small>This setting sets the sound that will play each time an alarm or a stopwatch ends</small></div>
 							</div>
 
-							<div class="fieldset Windowing">
+							<div class="fieldset ClockScreensaver">
 								<fieldset>
 								<h2>
-								<span translate="no" class="cpe-icon material-icons">select_window</span>
-								Windowing
+								<span translate="no" class="cpe-icon material-icons">ambient_screen</span>
+								Clock Screensaver
 								</h2>
-								<input type="checkbox" name="Windowing" id="Windowing01" onclick="toggleScreensaver()" title="Screensaver won't start after an inactivity of 1.5 mins in the Clock page"><label for="Windowing01" title="Screensaver won't start after an inactivity of 1.5 mins in the Clock page">No enablement of in-app screensaver in the Clock page</label>
+								<div class="fieldset ClockScreensaver01 WaitingTime">
+									<fieldset>
+									<h2>
+									<span translate="no" class="cpe-icon material-icons">pending</span>
+									Waiting Time
+									</h2>
+									<input type="radio" name="ClockScreensaver_WaitingTime" id="ClockScreensaver_WaitingTime01" onclick="SetSSWaitingTime(0)"><label for="ClockScreensaver_WaitingTime01">Low</label>
+									<br>
+									<input type="radio" name="ClockScreensaver_WaitingTime" id="ClockScreensaver_WaitingTime02" onclick="SetSSWaitingTime(1)"><label for="ClockScreensaver_WaitingTime02">Normal</label>
+									<br>
+									<input type="radio" name="ClockScreensaver_WaitingTime" id="ClockScreensaver_WaitingTime03" onclick="SetSSWaitingTime(2)"><label for="ClockScreensaver_WaitingTime03">High</label>
+									<br>
+									<input type="radio" name="ClockScreensaver_WaitingTime" id="ClockScreensaver_WaitingTime04" onclick="SetSSWaitingTime(3)"><label for="ClockScreensaver_WaitingTime04">Paused</label>
+									</fieldset>
+									<div style="margin:5px 0;"><small>This setting sets the screensaver activation time after inactivity</small></div>
+								</div>
+
+								<div class="fieldset ClockScreensaver02 UpdateSpeed">
+									<fieldset>
+									<h2>
+									<span translate="no" class="cpe-icon material-icons">speed</span>
+									Update Speed
+									</h2>
+									<input type="radio" name="ClockScreensaver_UpdateSpeed" id="ClockScreensaver_UpdateSpeed01" onclick="SetSSUpdateSpeed(0)"><label for="ClockScreensaver_UpdateSpeed01">High</label>
+									<br>
+									<input type="radio" name="ClockScreensaver_UpdateSpeed" id="ClockScreensaver_UpdateSpeed02" onclick="SetSSUpdateSpeed(1)"><label for="ClockScreensaver_UpdateSpeed02">Normal</label>
+									<br>
+									<input type="radio" name="ClockScreensaver_UpdateSpeed" id="ClockScreensaver_UpdateSpeed03" onclick="SetSSUpdateSpeed(2)"><label for="ClockScreensaver_UpdateSpeed03">Low</label>
+									<br>
+									<input type="radio" name="ClockScreensaver_UpdateSpeed" id="ClockScreensaver_UpdateSpeed04" onclick="SetSSUpdateSpeed(3)"><label for="ClockScreensaver_UpdateSpeed04">Paused</label>
+									</fieldset>
+									<div style="margin:5px 0;"><small>This setting sets clock's position refresh rate in the screensaver</small></div>
+								</div>
+								<input type="checkbox" name="ClockScreensaver" id="ClockScreensaver03" onclick="toggleScreensaverColor()" title="Clock's color in the Screensaver will be white"><label for="ClockScreensaver03" title="Clock's color in the Screensaver will be white">No use of Highlight Color in Clock</label>
 								</fieldset>
 							</div>
 
