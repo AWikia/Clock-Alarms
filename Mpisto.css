@@ -938,7 +938,8 @@ line-height:16px;
 
 .proc_page .cpe-button span,
 .proc_page .cpe-floating-button span,
-.proc_page .cpe-dropdown__content span {
+.proc_page .cpe-dropdown__content span,
+.proc_page .clock_time span {
     border-right:0;
     font-weight:inherit;
     vertical-align:middle;
@@ -1247,11 +1248,12 @@ line-height:16px;
 	justify-content:flex-start;
 }
 
-/* Clock */
+/** Clock **/
 main.clock .proc_page article {
 	overflow:hidden;
 	display:grid;
 }
+
 
 main.clock .proc_page .clock_time {
 	display:flex;
@@ -1270,14 +1272,127 @@ main.clock .proc_page .clock_time {
 	font-family:"Δι Κλοκ";
 }
 
+/* Digital Clock */
 main.clock .proc_page .clock_time time {
 	font-size:75%;
 }
 
+body.has-seconds-in-clock main.clock .proc_page .clock_time time {
+	font-size:48%;
+}
+
+body.has-analog-clock main.clock .proc_page .clock_time time,
+main.clock .proc_page .clock_time time .secs {
+	display:none;
+}
+
+body.has-seconds-in-clock main.clock .proc_page .clock_time time .secs {
+	display:inline;
+}
+
+/* Date */
 main.clock .proc_page .clock_time date {
 	font-size:20%;
 }
 
+body.has-no-date-in-clock main.clock .proc_page .clock_time date {
+	display:none;
+}
+
+/* Analog Clock */
+body.has-analog-clock main.clock .proc_page .clock_time {
+	font-size:50vh;
+	font-size:min(50vh, 50vw);
+	font-size:min(50dvh, 50dvw);
+
+}
+
+main.clock .proc_page .clock_time .analogclock {
+	display:none;
+	width:40vh;
+	width:min(40vh, 40vw);
+	width:min(40dvh, 40dvw);
+	height:40vh;
+	height:min(40vh, 40vw);
+	height:min(40dvh, 40dvw);
+	position:relative;
+	border:2.5vh solid;
+	border-width:min(2.5vh, 2.5vw);
+	border-width:min(2.5dvh, 2.5dvw);
+	margin:0 auto;
+	border-radius:50%;
+	padding:0.1em;
+	
+}
+
+main.clock .proc_page .clock_time .analogclock .circle {
+  background: currentcolor;
+  position: absolute;
+  width:4vh;
+  width:min(4vh, 4vw);
+  width:min(4dvh, 4dvw);
+  height:4vh;
+  height:min(4vh, 4vw);
+  height:min(4dvh, 4dvw);
+  top: 50%;
+  left:50%;
+  margin-left: -2vh;
+  margin-left: max(-2vh, -2vw);
+  margin-left: max(-2dvh, -2dvw);
+  margin-top: -0.5vh;
+  margin-top: max(-0.5vh, -0.5vw);
+  margin-top: max(-0.5dvh, -0.5dvw);
+  border-radius:2.5vh;
+  border-radius:min(2.5vh, 2.5vw);
+  border-radius:min(2.5dvh, 2.5dvw);
+  z-index:11;
+
+}
+
+main.clock .proc_page .clock_time .analogclock .hand {
+  width: 50%;
+  right: 50%;
+  height:2.5vh;
+  height:min(2.5vh, 2.5vw);
+  height:min(2.5dvh, 2.5dvw);
+  background: currentcolor;
+  position: absolute;
+  top: 50%;
+  transform-origin: 100%;
+  transform: rotate(90deg);
+  border-radius:2.5vh;
+  border-radius:min(2.5vh, 2.5vw);
+  border-radius:min(2.5dvh, 2.5dvw);
+
+}
+
+main.clock .proc_page .clock_time .analogclock .hand.hour-hand {
+  width: 30%;
+  z-index: 3;
+}
+
+main.clock .proc_page .clock_time .analogclock .hand.min-hand {
+  z-index: 10;
+  width: 40%;
+  height:1.875vh;
+  height:min(1.875vh, 1.875vw);
+  height:min(1.875dvh, 1.875dvw);
+}
+
+main.clock .proc_page .clock_time .analogclock .hand.second-hand {
+  width: 45%;
+  height:1.25vh;
+  height:min(1.25vh, 1.25vw);
+  height:min(1.25dvh, 1.25dvw);
+  display:none;
+}
+
+body.has-seconds-in-clock main.clock .proc_page .clock_time .analogclock .hand.second-hand,
+body.has-analog-clock main.clock .proc_page .clock_time .analogclock {
+	display:block;
+}
+
+/* Time Elements */
 .proc_page .header time {
 	font-family:"Δι Κλοκ";
 	font-size:250%;

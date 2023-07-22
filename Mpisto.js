@@ -22,12 +22,7 @@
 	if (getKey('ckal-default-page') === '-1') {
 		insertKey('ckal-default-page', 'clock' );
 	}
-	if (getKey('ckal-alarm-sound') === '-1') {
-		insertKey('ckal-alarm-sound', '05' );
-	}
-	if (getKey('ckal-stopwatch-sound') === '-1') {
-		insertKey('ckal-stopwatch-sound', '13' );
-	}
+// Clock
 	if (getKey('ckal-screensaver-color') === '-1') {
 		insertKey('ckal-screensaver-color', 'highlight' );
 	}
@@ -36,6 +31,23 @@
 	}
 	if (getKey('ckal-screensaver-refresh') === '-1') {
 		insertKey('ckal-screensaver-refresh', '1' );
+	}
+	if (getKey('ckal-seconds-clock') === '-1') {
+		insertKey('ckal-seconds-clock', 'false' );
+	}
+	if (getKey('ckal-analog-clock') === '-1') {
+		insertKey('ckal-analog-clock', 'false' );
+	}
+	if (getKey('ckal-date-visibility') === '-1') {
+		insertKey('ckal-date-visibility', 'visible' );
+	}
+// Alarms
+	if (getKey('ckal-alarm-sound') === '-1') {
+		insertKey('ckal-alarm-sound', '05' );
+	}
+// Stopwatch
+	if (getKey('ckal-stopwatch-sound') === '-1') {
+		insertKey('ckal-stopwatch-sound', '13' );
 	}
 		/* Active Theme */
 		if (getKey('device-theme') === 'light' ) {
@@ -53,21 +65,32 @@
 		$('body').attr("page",  default_page);
 		document.getElementById("LandingPage" + ['01','02','03','04'][ ['clock','alarms','stopwatch','timer'].indexOf(default_page) ]).checked=true;
 		/* Clock Page */
-		date = new Date();
-		hour = date.getHours().toString().padStart(2, '0');
-		min = date.getMinutes().toString().padStart(2, '0');
-		document.querySelector('main.clock .proc_page .clock_time time').innerHTML = hour + ':' +  min;
-		document.querySelector('main.clock .proc_page .clock_time date').innerHTML = date.getDate().toString().padStart(2, '0') + '/' +  (date.getMonth() + 1).toString().padStart(2, '0') + '/' +  date.getFullYear().toString().padStart(4, '0');
-		window.ckal_oldHour =  hour;
-		window.ckal_oldMin =  min;
+		window.ckal_oldHour =  '00';
+		window.ckal_oldMin =  '00';
+		window.ckal_oldSec =  '00';
+		window.ckal_olddate = '00/00/0000';
+		ChangeDate();
 		setInterval(ChangeDate, 1000);
 		// Screensaver
 		ss_waitingtime = getKey('ckal-screensaver-waiting');
 		ss_refreshrate = getKey('ckal-screensaver-refresh');
-		document.getElementById("ClockScreensaver_WaitingTime" + ['01','02','03','04'][ ['0','1','2','3'].indexOf(ss_waitingtime) ]).checked=true;
-		document.getElementById("ClockScreensaver_UpdateSpeed" + ['01','02','03','04'][ ['0','1','2','3'].indexOf(ss_refreshrate) ]).checked=true;
-		document.getElementById("ClockScreensaver03").checked=(getKey('ckal-screensaver-color') != 'highlight');
+		document.getElementById("Clock_Screensaver_WaitingTime" + ['01','02','03','04'][ ['0','1','2','3'].indexOf(ss_waitingtime) ]).checked=true;
+		document.getElementById("Clock_Screensaver_UpdateSpeed" + ['01','02','03','04'][ ['0','1','2','3'].indexOf(ss_refreshrate) ]).checked=true;
+		document.getElementById("Clock_Screensaver03").checked=(getKey('ckal-screensaver-color') != 'highlight');
 		$('body').attr("clockcolor",  getKey('ckal-screensaver-color'));
+		analog_clock = getKey('ckal-analog-clock');
+		document.getElementById("Clock_Style" + ['01','02'][ ['false','true'].indexOf(analog_clock) ]).checked=true;
+		if (getKey('ckal-analog-clock') === 'true') {
+			document.querySelector('body').classList.add("has-analog-clock");
+		}
+		if (getKey('ckal-seconds-clock') === 'true') {
+			document.querySelector('body').classList.add("has-seconds-in-clock");
+			document.getElementById("Clock03").checked=true;
+		}
+		if (getKey('ckal-date-visibility') === 'hidden') {
+			document.querySelector('body').classList.add("has-no-date-in-clock");
+			document.getElementById("Clock04").checked=true;
+		}
 		setInterval(CheckClockScreensaver, 1000);
 		clockinterval = null;
 		window.ckal_sstime = 0;
@@ -100,11 +123,31 @@ function ChangeDate() {
 	date = new Date();
 	hour = date.getHours().toString().padStart(2, '0');
 	min = date.getMinutes().toString().padStart(2, '0');
-	if ( (window.ckal_oldHour != hour) || (window.ckal_oldMin != min) ) {
-		document.querySelector('main.clock .proc_page .clock_time time').innerHTML = hour + ':' +  min;
-		document.querySelector('main.clock .proc_page .clock_time date').innerHTML = date.getDate().toString().padStart(2, '0') + '/' +  (date.getMonth() + 1).toString().padStart(2, '0') + '/' +  date.getFullYear().toString().padStart(4, '0');
+	sec = date.getSeconds().toString().padStart(2, '0');
+	fulldate = date.getDate().toString().padStart(2, '0') + '/' +  (date.getMonth() + 1).toString().padStart(2, '0') + '/' +  date.getFullYear().toString().padStart(4, '0')
+	// Analog
+	var hourDegrees = ((parseInt(hour) / 12) * 360) + ((parseInt(min)/60)*30) + 90;
+	var minsDegrees = ((parseInt(min) / 60) * 360) + ((parseInt(sec)/60)*6) + 90;
+	var secondsDegrees = ((parseInt(sec) / 60) * 360) + 90;
+	document.querySelector('main.clock .proc_page .clock_time .analogclock .hand.hour-hand').style.transform = `rotate(${hourDegrees}deg)`;
+	document.querySelector('main.clock .proc_page .clock_time .analogclock .hand.min-hand').style.transform = `rotate(${minsDegrees}deg)`;
+	document.querySelector('main.clock .proc_page .clock_time .analogclock .hand.second-hand').style.transform = `rotate(${secondsDegrees}deg)`;
+	// Digital
+	if (window.ckal_oldHour != hour) {
+		document.querySelector('main.clock .proc_page .clock_time time .hours').innerHTML = hour;
 		window.ckal_oldHour =  hour;
+	}
+	if (window.ckal_oldMin != min) {
+		document.querySelector('main.clock .proc_page .clock_time time .mins').innerHTML = ":" + min;
 		window.ckal_oldMin =  min;
+	}
+	if (window.ckal_oldSec != sec) {
+		document.querySelector('main.clock .proc_page .clock_time time .secs').innerHTML = ":" + sec;
+		window.ckal_oldSec =  sec;
+	}
+	if (window.ckal_oldDate != fulldate) {	
+		document.querySelector('main.clock .proc_page .clock_time date').innerHTML = fulldate;
+		window.ckal_oldDate = fulldate
 	}
 
 }
@@ -164,10 +207,43 @@ function SetSSUpdateSpeed(speed=1) {
 }
 
 function toggleScreensaverColor() {
-	nosaver = (document.getElementById("ClockScreensaver03").checked) ? 'white' : 'highlight';
+	nosaver = (document.getElementById("Clock_Screensaver03").checked) ? 'white' : 'highlight';
 	insertKey('ckal-screensaver-color',nosaver);
 	document.querySelector('body').setAttribute("clockcolor",  getKey('ckal-screensaver-color'));
 }
+
+function SetClockStyle(style=0) {
+	analog = (style == 1) ? 'true' : 'false';
+	insertKey('ckal-analog-clock', analog );
+	if (analog === 'true') {
+		document.querySelector('body').classList.add("has-analog-clock");
+	} else {
+		document.querySelector('body').classList.remove("has-analog-clock");
+	}
+}
+
+function toggleClockSeconds() {
+	seconds = (document.getElementById("Clock03").checked) ? 'true' : 'false';
+	insertKey('ckal-seconds-clock', seconds );
+	if (seconds === 'true') {
+		document.querySelector('body').classList.add("has-seconds-in-clock");
+	} else {
+		document.querySelector('body').classList.remove("has-seconds-in-clock");
+	}
+
+}
+
+function toggleClockDate() {
+	nodate = (document.getElementById("Clock04").checked) ? 'hidden' : 'visible';
+	insertKey('ckal-date-visibility', nodate );
+	if (nodate === 'hidden') {
+		document.querySelector('body').classList.add("has-no-date-in-clock");
+	} else {
+		document.querySelector('body').classList.remove("has-no-date-in-clock");
+	}
+
+}
+
 
 /* Alarms */
 function toggleAlarm(id=0,a_endtext="Alarm!!!") {

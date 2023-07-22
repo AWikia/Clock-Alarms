@@ -113,7 +113,13 @@
 						</footer>
 						<article>
 							<div class="clock_time" ondblclick="BeginClockScreensaver()">
-								<time>00:00</time>
+								<div class="analogclock">
+									    <div class="circle"></div>
+									    <div class="hand hour-hand"></div>
+										<div class="hand min-hand"></div>
+										<div class="hand second-hand"></div>
+								</div>
+								<time><span class="hours">00</span><span class="mins">:00</span><span class="secs">:00</span></time>
 								<date>00/00/0000</date>
 							</div>
 						</article>
@@ -397,46 +403,68 @@
 								</fieldset>
 								<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει τον ήχο που θα παίζει κάθε φορά που τελιώνει μια αφύπνηση ή ένας χρονοδιακόπτης</small></div>
 							</div>
-
-							<div class="fieldset ClockScreensaver">
+							<div class="fieldset Clock">
 								<fieldset>
 								<h2>
-								<span translate="no" class="cpe-icon material-icons">ambient_screen</span>
-								Προφύλαξη Οθόνης Ρολογιού
+								<span translate="no" class="cpe-icon material-icons">schedule</span>
+								Ρολόι
 								</h2>
-								<div class="fieldset ClockScreensaver01 WaitingTime">
+								<div class="fieldset Clock01 Screensaver">
 									<fieldset>
 									<h2>
-									<span translate="no" class="cpe-icon material-icons">pending</span>
-									Χρόνος Αναμονής
+									<span translate="no" class="cpe-icon material-icons">ambient_screen</span>
+									Προφύλαξη Οθόνης
 									</h2>
-									<input type="radio" name="ClockScreensaver_WaitingTime" id="ClockScreensaver_WaitingTime01" onclick="SetSSWaitingTime(0)"><label for="ClockScreensaver_WaitingTime01">Χαμηλός</label>
-									<br>
-									<input type="radio" name="ClockScreensaver_WaitingTime" id="ClockScreensaver_WaitingTime02" onclick="SetSSWaitingTime(1)"><label for="ClockScreensaver_WaitingTime02">Κανονικός</label>
-									<br>
-									<input type="radio" name="ClockScreensaver_WaitingTime" id="ClockScreensaver_WaitingTime03" onclick="SetSSWaitingTime(2)"><label for="ClockScreensaver_WaitingTime03">Υψηλός</label>
-									<br>
-									<input type="radio" name="ClockScreensaver_WaitingTime" id="ClockScreensaver_WaitingTime04" onclick="SetSSWaitingTime(3)"><label for="ClockScreensaver_WaitingTime04">Σε Παύση</label>
+									<div class="fieldset Clock_Screensaver01 WaitingTime">
+										<fieldset>
+										<h2>
+										<span translate="no" class="cpe-icon material-icons">pending</span>
+										Χρόνος Αναμονής
+										</h2>
+										<input type="radio" name="Clock_Screensaver_WaitingTime" id="Clock_Screensaver_WaitingTime01" onclick="SetSSWaitingTime(0)"><label for="Clock_Screensaver_WaitingTime01">Χαμηλός</label>
+										<br>
+										<input type="radio" name="Clock_Screensaver_WaitingTime" id="Clock_Screensaver_WaitingTime02" onclick="SetSSWaitingTime(1)"><label for="Clock_Screensaver_WaitingTime02">Κανονικός</label>
+										<br>
+										<input type="radio" name="Clock_Screensaver_WaitingTime" id="Clock_Screensaver_WaitingTime03" onclick="SetSSWaitingTime(2)"><label for="Clock_Screensaver_WaitingTime03">Υψηλός</label>
+										<br>
+										<input type="radio" name="Clock_Screensaver_WaitingTime" id="Clock_Screensaver_WaitingTime04" onclick="SetSSWaitingTime(3)"><label for="Clock_Screensaver_WaitingTime04">Σε Παύση</label>
+										</fieldset>
+										<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει τον χρόνο ενεργοποίησης της προφύλαξη οθόνης μετά από αδράνεια</small></div>
+									</div>
+									<div class="fieldset Clock_Screensaver02 UpdateSpeed">
+										<fieldset>
+										<h2>
+										<span translate="no" class="cpe-icon material-icons">speed</span>
+										Ταχύτητα Ενημέρωσης
+										</h2>
+										<input type="radio" name="Clock_Screensaver_UpdateSpeed" id="Clock_Screensaver_UpdateSpeed01" onclick="SetSSUpdateSpeed(0)"><label for="Clock_Screensaver_UpdateSpeed01">Υψηλή</label>
+										<br>
+										<input type="radio" name="Clock_Screensaver_UpdateSpeed" id="Clock_Screensaver_UpdateSpeed02" onclick="SetSSUpdateSpeed(1)"><label for="Clock_Screensaver_UpdateSpeed02">Κανονική</label>
+										<br>
+										<input type="radio" name="Clock_Screensaver_UpdateSpeed" id="Clock_Screensaver_UpdateSpeed03" onclick="SetSSUpdateSpeed(2)"><label for="Clock_Screensaver_UpdateSpeed03">Χαμηλή</label>
+										<br>
+										<input type="radio" name="Clock_Screensaver_UpdateSpeed" id="Clock_Screensaver_UpdateSpeed04" onclick="SetSSUpdateSpeed(3)"><label for="Clock_Screensaver_UpdateSpeed04">Σε Παύση</label>
+										</fieldset>
+										<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει τον ρυθμό ανανέωσης της θέσης του ρολογιού στην προφύλαξη οθόνης</small></div>
+									</div>
+									<input type="checkbox" name="Clock_Screensaver" id="Clock_Screensaver03" onclick="toggleScreensaverColor()" title="Το χρώμα του ρολογιού στην προφύλαξη οθόνης θα είναι λευκό"><label for="Clock_Screensaver03" title="Το χρώμα του ρολογιού στην προφύλαξη οθόνης θα είναι λευκό">Μη χρήση του χρωμάτος επισήμανσης</label>
 									</fieldset>
-									<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει τον χρόνο ενεργοποίηςης της προφύλαξη οθόνης μετά από αδράνεια</small></div>
 								</div>
-								<div class="fieldset ClockScreensaver02 UpdateSpeed">
+								<div class="fieldset Clock02 Style">
 									<fieldset>
 									<h2>
-									<span translate="no" class="cpe-icon material-icons">speed</span>
-									Ταχύτητα Ενημέρωσης
+									<span translate="no" class="cpe-icon material-icons">format_paint</span>
+									Στυλ
 									</h2>
-									<input type="radio" name="ClockScreensaver_UpdateSpeed" id="ClockScreensaver_UpdateSpeed01" onclick="SetSSUpdateSpeed(0)"><label for="ClockScreensaver_UpdateSpeed01">Υψηλή</label>
+									<input type="radio" name="Clock_Style" id="Clock_Style01" onclick="SetClockStyle(0)"><label for="Clock_Style01">Ψηφιακό</label>
 									<br>
-									<input type="radio" name="ClockScreensaver_UpdateSpeed" id="ClockScreensaver_UpdateSpeed02" onclick="SetSSUpdateSpeed(1)"><label for="ClockScreensaver_UpdateSpeed02">Κανονική</label>
-									<br>
-									<input type="radio" name="ClockScreensaver_UpdateSpeed" id="ClockScreensaver_UpdateSpeed03" onclick="SetSSUpdateSpeed(2)"><label for="ClockScreensaver_UpdateSpeed03">Χαμηλή</label>
-									<br>
-									<input type="radio" name="ClockScreensaver_UpdateSpeed" id="ClockScreensaver_UpdateSpeed04" onclick="SetSSUpdateSpeed(3)"><label for="ClockScreensaver_UpdateSpeed04">Σε Παύση</label>
+									<input type="radio" name="Clock_Style" id="Clock_Style02" onclick="SetClockStyle(1)"><label for="Clock_Style02">Αναλογικό</label>
 									</fieldset>
-									<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει τον ρυθμό ανανέωσης της θέσης του ρολογιού στην προφύλαξη οθόνης</small></div>
+									<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει το στυλ ρολογιού</small></div>
 								</div>
-								<input type="checkbox" name="ClockScreensaver" id="ClockScreensaver03" onclick="toggleScreensaverColor()" title="Το χρώμα του ρολογιού στην προφύλαξη οθόνης θα είναι λευκό"><label for="ClockScreensaver03" title="Το χρώμα του ρολογιού στην προφύλαξη οθόνης θα είναι λευκό">Μη χρήση του χρωμάτος επισήμανσης στο ρολόι</label>
+								<input type="checkbox" name="Clock" id="Clock03" onclick="toggleClockSeconds()" title="Θα εμφανίζονται τα δευτερόλεπτα στο ρολόι"><label for="Clock03" title="Θα εμφανίζονται τα δευτερόλεπτα στο ρολόι">Εμφάνιση δευτερολέπτων</label>
+								<br>
+								<input type="checkbox" name="Clock" id="Clock04" onclick="toggleClockDate()" title="Δεν θα εμφανίζεται η ημερομηνία στο ρολόι"><label for="Clock04" title="Δεν θα εμφανίζεται η ημερομηνία στο ρολόι">Απόκρυψη Ημερομηνίας</label>
 								</fieldset>
 							</div>
 
