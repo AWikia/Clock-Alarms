@@ -114,10 +114,24 @@
 						<article>
 							<div class="clock_time" ondblclick="BeginClockScreensaver()">
 								<div class="analogclock">
-									    <div class="circle"></div>
-									    <div class="hand hour-hand"></div>
-										<div class="hand min-hand"></div>
-										<div class="hand second-hand"></div>
+									<div class="outer">
+										<div class="marking m12"><span></span></div>
+										<div class="marking m1"><span></span></div>
+										<div class="marking m2"><span></span></div>
+										<div class="marking m3"><span></span></div>
+										<div class="marking m4"><span></span></div>
+										<div class="marking m5"><span></span></div>
+										<div class="marking m6"><span></span></div>
+										<div class="marking m7"><span></span></div>
+										<div class="marking m8"><span></span></div>
+										<div class="marking m9"><span></span></div>
+										<div class="marking m10"><span></span></div>
+										<div class="marking m11"><span></span></div>
+									</div>
+									<div class="circle"></div>
+									<div class="hand hour-hand"></div>
+									<div class="hand min-hand"></div>
+									<div class="hand second-hand"></div>
 								</div>
 								<time><span class="hours">00</span><span class="mins">:00</span><span class="secs">:00</span></time>
 								<date>00/00/0000</date>
@@ -464,7 +478,9 @@
 								</div>
 								<input type="checkbox" name="Clock" id="Clock03" onclick="toggleClockSeconds()" title="Θα εμφανίζονται τα δευτερόλεπτα στο ρολόι"><label for="Clock03" title="Θα εμφανίζονται τα δευτερόλεπτα στο ρολόι">Εμφάνιση δευτερολέπτων</label>
 								<br>
-								<input type="checkbox" name="Clock" id="Clock04" onclick="toggleClockDate()" title="Δεν θα εμφανίζεται η ημερομηνία στο ρολόι"><label for="Clock04" title="Δεν θα εμφανίζεται η ημερομηνία στο ρολόι">Απόκρυψη Ημερομηνίας</label>
+								<input type="checkbox" name="Clock" id="Clock04" onclick="toggleClockDate()" title="Δεν θα εμφανίζεται η ημερομηνία στο ρολόι"><label for="Clock04" title="Δεν θα εμφανίζεται η ημερομηνία στο ρολόι">Απόκρυψη ημερομηνίας</label>
+								<br>
+								<input type="checkbox" name="Clock" id="Clock05" onclick="toggleAnalogClockTicmarks()" title="Δεν θα εμφανίζονται σύμβολα τικ στο αναλογικό ρολόι"><label for="Clock05" title="Δεν θα εμφανίζονται σύμβολα τικ στο αναλογικό ρολόι">Απόκρυψη συμβόλων τικ στο αναλογικό ρολόι</label>
 								</fieldset>
 							</div>
 

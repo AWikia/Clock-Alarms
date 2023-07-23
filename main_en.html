@@ -114,10 +114,24 @@
 						<article>
 							<div class="clock_time" ondblclick="BeginClockScreensaver()">
 								<div class="analogclock">
-									    <div class="circle"></div>
-									    <div class="hand hour-hand"></div>
-										<div class="hand min-hand"></div>
-										<div class="hand second-hand"></div>
+									<div class="outer">
+										<div class="marking m12"><span></span></div>
+										<div class="marking m1"><span></span></div>
+										<div class="marking m2"><span></span></div>
+										<div class="marking m3"><span></span></div>
+										<div class="marking m4"><span></span></div>
+										<div class="marking m5"><span></span></div>
+										<div class="marking m6"><span></span></div>
+										<div class="marking m7"><span></span></div>
+										<div class="marking m8"><span></span></div>
+										<div class="marking m9"><span></span></div>
+										<div class="marking m10"><span></span></div>
+										<div class="marking m11"><span></span></div>
+									</div>
+									<div class="circle"></div>
+									<div class="hand hour-hand"></div>
+									<div class="hand min-hand"></div>
+									<div class="hand second-hand"></div>
 								</div>
 								<time><span class="hours">00</span><span class="mins">:00</span><span class="secs">:00</span></time>
 								<date>00/00/0000</date>
@@ -464,9 +478,11 @@
 									</fieldset>
 									<div style="margin:5px 0;"><small>This setting sets clock style</small></div>
 								</div>
-								<input type="checkbox" name="Clock" id="Clock03" onclick="toggleClockSeconds()" title="Seconds will be shown in the Clock"><label for="Clock03" title="Seconds will be shown in the Clock">Show Seconds</label>
+								<input type="checkbox" name="Clock" id="Clock03" onclick="toggleClockSeconds()" title="Seconds will be shown in the Clock"><label for="Clock03" title="Seconds will be shown in the Clock">Show seconds</label>
 								<br>
-								<input type="checkbox" name="Clock" id="Clock04" onclick="toggleClockDate()" title="Date will be hidden in the Clock"><label for="Clock04" title="Date will be hidden in the Clock">Hide Date</label>
+								<input type="checkbox" name="Clock" id="Clock04" onclick="toggleClockDate()" title="Date will be hidden in the Clock"><label for="Clock04" title="Date will be hidden in the Clock">Hide date</label>
+								<br>
+								<input type="checkbox" name="Clock" id="Clock05" onclick="toggleAnalogClockTicmarks()" title="No tic marks will be shown in analog clock"><label for="Clock05" title="No tic marks will be shown in analog clock">Hide tic marks in analog clock</label>
 								</fieldset>
 							</div>
 

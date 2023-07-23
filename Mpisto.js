@@ -32,14 +32,17 @@
 	if (getKey('ckal-screensaver-refresh') === '-1') {
 		insertKey('ckal-screensaver-refresh', '1' );
 	}
-	if (getKey('ckal-seconds-clock') === '-1') {
-		insertKey('ckal-seconds-clock', 'false' );
-	}
 	if (getKey('ckal-analog-clock') === '-1') {
 		insertKey('ckal-analog-clock', 'false' );
 	}
+	if (getKey('ckal-seconds-clock') === '-1') {
+		insertKey('ckal-seconds-clock', 'false' );
+	}
 	if (getKey('ckal-date-visibility') === '-1') {
 		insertKey('ckal-date-visibility', 'visible' );
+	}
+	if (getKey('ckal-analog-clock-hidden-ticmarks') === '-1') {
+		insertKey('ckal-analog-clock-hidden-ticmarks', 'false' );
 	}
 // Alarms
 	if (getKey('ckal-alarm-sound') === '-1') {
@@ -71,25 +74,34 @@
 		window.ckal_olddate = '00/00/0000';
 		ChangeDate();
 		setInterval(ChangeDate, 1000);
-		// Screensaver
+		// Clock Screensaver
 		ss_waitingtime = getKey('ckal-screensaver-waiting');
 		ss_refreshrate = getKey('ckal-screensaver-refresh');
 		document.getElementById("Clock_Screensaver_WaitingTime" + ['01','02','03','04'][ ['0','1','2','3'].indexOf(ss_waitingtime) ]).checked=true;
 		document.getElementById("Clock_Screensaver_UpdateSpeed" + ['01','02','03','04'][ ['0','1','2','3'].indexOf(ss_refreshrate) ]).checked=true;
+		// Clock Screensaver Color
 		document.getElementById("Clock_Screensaver03").checked=(getKey('ckal-screensaver-color') != 'highlight');
 		$('body').attr("clockcolor",  getKey('ckal-screensaver-color'));
+		// Clock Style
 		analog_clock = getKey('ckal-analog-clock');
 		document.getElementById("Clock_Style" + ['01','02'][ ['false','true'].indexOf(analog_clock) ]).checked=true;
 		if (getKey('ckal-analog-clock') === 'true') {
 			document.querySelector('body').classList.add("has-analog-clock");
 		}
+		// Seconds in Clock
 		if (getKey('ckal-seconds-clock') === 'true') {
 			document.querySelector('body').classList.add("has-seconds-in-clock");
 			document.getElementById("Clock03").checked=true;
 		}
+		// No Date
 		if (getKey('ckal-date-visibility') === 'hidden') {
 			document.querySelector('body').classList.add("has-no-date-in-clock");
 			document.getElementById("Clock04").checked=true;
+		}
+		// No Tic Marks in Analog Clock
+		if (getKey('ckal-analog-clock-hidden-ticmarks') === 'true') {
+			document.querySelector('body').classList.add("has-no-aclock-tickmarks");
+			document.getElementById("Clock05").checked=true;
 		}
 		setInterval(CheckClockScreensaver, 1000);
 		clockinterval = null;
@@ -240,6 +252,17 @@ function toggleClockDate() {
 		document.querySelector('body').classList.add("has-no-date-in-clock");
 	} else {
 		document.querySelector('body').classList.remove("has-no-date-in-clock");
+	}
+
+}
+
+function toggleAnalogClockTicmarks() {
+	nomarks = (document.getElementById("Clock05").checked) ? 'true' : 'false';
+	insertKey('ckal-analog-clock-hidden-ticmarks', nomarks );
+	if (nomarks === 'true') {
+		document.querySelector('body').classList.add("has-no-aclock-tickmarks");
+	} else {
+		document.querySelector('body').classList.remove("has-no-aclock-tickmarks");
 	}
 
 }
