@@ -1,7 +1,45 @@
 /* Το κλοκάκι το καλό */
 @font-face {
-  font-family: 'Δι Κλοκ';
+  font-family: 'Evelution Clock Standard';
   font-style: normal;
   font-weight:400;
-  src: url("Δι Κλοκ.ttf");
+  src: url("Evelution Clock/Standard.ttf");
+}
+
+
+@font-face {
+  font-family: 'Evelution Clock';
+  font-style: normal;
+  font-weight:400;
+  src: url("Evelution Clock/Normal.ttf");
+}
+
+@font-face {
+  font-family: 'Evelution Clock Round';
+  font-style: normal;
+  font-weight:400;
+  src: url("Evelution Clock/Round.ttf");
+}
+
+@font-face {
+  font-family: 'Evelution Clock Sharp';
+  font-style: normal;
+  font-weight:400;
+  src: url("Evelution Clock/Sharp.ttf");
+}
+
+
+@font-face {
+  font-family: 'Evelution Clock Alternate';
+  font-style: normal;
+  font-weight:400;
+  src: url("Evelution Clock/Alternate.ttf");
+}
+
+
+@font-face {
+  font-family: 'Evelution Clock Retro';
+  font-style: normal;
+  font-weight:400;
+  src: url("Evelution Clock/Retro.ttf");
 }

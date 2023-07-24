@@ -22,6 +22,9 @@
 	if (getKey('ckal-default-page') === '-1') {
 		insertKey('ckal-default-page', 'clock' );
 	}
+	if (getKey('ckal-clock-font') === '-1') {
+		insertKey('ckal-clock-font', 'standard' );
+	}
 // Clock
 	if (getKey('ckal-screensaver-color') === '-1') {
 		insertKey('ckal-screensaver-color', 'highlight' );
@@ -67,6 +70,10 @@
 		default_page = getKey('ckal-default-page');
 		$('body').attr("page",  default_page);
 		document.getElementById("LandingPage" + ['01','02','03','04'][ ['clock','alarms','stopwatch','timer'].indexOf(default_page) ]).checked=true;
+		/* Clock Font */
+		clock_font = getKey('ckal-clock-font');
+		$('body').attr("clockfont",  clock_font);
+		document.getElementById("ClockFont" + ['01','02','03','04'][ ['standard','dynamic','alternate','retro'].indexOf(clock_font) ]).checked=true;
 		/* Clock Page */
 		window.ckal_oldHour =  '00';
 		window.ckal_oldMin =  '00';
@@ -508,6 +515,11 @@ function StopTimer(starttext="Start") {
 		document.querySelector("main.timer .proc_page footer button.timer-stop").disabled = true;
 		document.querySelector("main.timer .proc_page section article").innerHTML = '';
 		document.querySelector('.focus-overlay').focus();
+}
+
+function setFont(font='standard') {
+	insertKey('ckal-clock-font', font);
+	$('body').attr("clockfont",  font);
 }
 
 /* Section Changing Functions */

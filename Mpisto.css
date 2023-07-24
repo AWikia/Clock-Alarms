@@ -644,6 +644,19 @@ user-select:none;
 
 body {
 --page-opacity:0.85;
+--clock-font-family:"Evelution Clock Standard";
+}
+
+body[clockfont="dynamic"] {
+--clock-font-family:var(--system-clock-font-family);
+}
+
+body[clockfont="alternate"] {
+--clock-font-family:"Evelution Clock Alternate";
+}
+
+body[clockfont="retro"] {
+--clock-font-family:"Evelution Clock Retro";
 }
 
 .desktop-background {
@@ -1046,7 +1059,7 @@ line-height:16px;
 	border-radius:50%;
 	content:attr(timer);
     font-size:30px;
-    font-family:"Δι Κλοκ";
+    font-family:var(--clock-font-family);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -1269,12 +1282,13 @@ main.clock .proc_page .clock_time {
 	font-size:calc(50vw - 156px);
 	font-size:min(calc(50vw - 156px), calc(100vh - 50px));
 	font-size:min(calc(50dvw - 156px), calc(100dvh - 50px));
-	font-family:"Δι Κλοκ";
+	font-family:var(--clock-font-family);
 }
 
 /* Digital Clock */
 main.clock .proc_page .clock_time time {
 	font-size:75%;
+	line-height:0.6;
 }
 
 body.has-seconds-in-clock main.clock .proc_page .clock_time time {
@@ -1488,7 +1502,7 @@ body.has-analog-clock main.clock .proc_page .clock_time .analogclock {
 
 /* Time Elements */
 .proc_page .header time {
-	font-family:"Δι Κλοκ";
+	font-family:var(--clock-font-family);
 	font-size:250%;
 }
 
