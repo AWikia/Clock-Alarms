@@ -1288,7 +1288,7 @@ main.clock .proc_page .clock_time {
 /* Digital Clock */
 main.clock .proc_page .clock_time time {
 	font-size:75%;
-	line-height:0.6;
+	line-height:0.6275;
 }
 
 body.has-seconds-in-clock main.clock .proc_page .clock_time time {
@@ -1307,6 +1307,7 @@ body.has-seconds-in-clock main.clock .proc_page .clock_time time .secs {
 /* Date */
 main.clock .proc_page .clock_time date {
 	font-size:20%;
+	line-height:1.15;
 }
 
 body.has-no-date-in-clock main.clock .proc_page .clock_time date {
