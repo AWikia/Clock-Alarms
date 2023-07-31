@@ -293,7 +293,7 @@ function countAlarm(id,a_endtext="Alarm!!!") {
 	// Exclusive
 	elemTitle = document.querySelector("main.alarms .proc_page article header[clockid='" + String( id ).padStart(2, '0') + "'] span.name .alarm-name > label");
 	elemDate = document.querySelector("main.alarms .proc_page article header[clockid='" + String( id ).padStart(2, '0') + "'] span.time > time").innerHTML;
-	date = document.querySelector('main.clock .proc_page .clock_time time').innerHTML;
+	date = document.querySelector('main.clock .proc_page .clock_time time .hours').innerHTML + document.querySelector('main.clock .proc_page .clock_time time .mins').innerHTML;
 	if (elemDate == date) {
 		playAudio('Sounds/Alarm' + getAlarmSound() + '.mp3');
 		AddFloatingBanner('<big><b>' + a_endtext + '</b></big><br>' + elemTitle.innerHTML + '<br>' + date ,'success');
