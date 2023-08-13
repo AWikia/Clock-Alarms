@@ -308,12 +308,12 @@
 							<h2>Ρυθμίσεις</h2>
 						</header>
 						<article>
-							<div class="fieldset AppTheme">
-								<fieldset>
-								<h2>
+							<div class="cpe-settings-fieldset AppTheme">
+								<details class="cpe-settings-fieldset__content" open>
+								<summary><h2>
 								<span translate="no" class="cpe-icon material-icons">palette</span>
 								Θέμα Εφαρμογής
-								</h2>
+								</h2></summary>
 								<input type="radio" name="AppTheme" id="AppTheme01" onclick="colortheme('match-parent','light','match-parent','match-parent','duo')"><label for="AppTheme01">Αυτόματο</label>
 								<br>
 								<input type="radio" name="AppTheme" id="AppTheme02" onclick="colortheme('match-parent','dark','match-parent','match-parent','duo')"><label for="AppTheme02">Αυτόματο (Σκουρόχρωμο)</label>
@@ -324,16 +324,16 @@
 								<div>
 								<input type="radio" name="AppTheme" id="AppTheme05"><label for="AppTheme05">Προσαρμοσμένο</label>
 								</div>
-								</fieldset>
+								</details>
 								<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει το θέμα συσκευής του Ρολογιού και Αφυπνήσεων</small></div>
 							</div>
 							
-							<div class="fieldset LandingPage">
-								<fieldset>
-								<h2>
+							<div class="cpe-settings-fieldset LandingPage">
+								<details class="cpe-settings-fieldset__content" open>
+								<summary><h2>
 								<span translate="no" class="cpe-icon material-icons">home</span>
 								Σελίδα Προσγείωσης
-								</h2>
+								</h2></summary>
 								<input type="radio" name="LandingPage" id="LandingPage01" onclick="insertKey('ckal-default-page', 'clock')"><label for="LandingPage01">Ρολόι</label>
 								<br>
 								<input type="radio" name="LandingPage" id="LandingPage02" onclick="insertKey('ckal-default-page', 'alarms')"><label for="LandingPage02">Αφυπνήσεις</label>
@@ -341,15 +341,15 @@
 								<input type="radio" name="LandingPage" id="LandingPage03" onclick="insertKey('ckal-default-page', 'stopwatch')"><label for="LandingPage03">Χρονοδιακόπτης</label>
 								<br>
 								<input type="radio" name="LandingPage" id="LandingPage04" onclick="insertKey('ckal-default-page', 'timer')"><label for="LandingPage04">Χρονόμετρο</label>
-								</fieldset>
+								</details>
 								<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει την σελίδα που θα εμφανίζεται κάθε φορά που ξεκινά το Ρολόι και Αφυπνήσεις</small></div>
 							</div>
-							<div class="fieldset ClockFont">
-								<fieldset>
-								<h2>
+							<div class="cpe-settings-fieldset ClockFont">
+								<details class="cpe-settings-fieldset__content" open>
+								<summary><h2>
 								<span translate="no" class="cpe-icon material-icons">title</span>
 								Στυλ Γραμματοσειράς Ρολογιών
-								</h2>
+								</h2></summary>
 								<input type="radio" name="ClockFont" id="ClockFont01" onclick="setFont('standard')"><label for="ClockFont01">Τυπικό</label>
 								<br>
 								<input type="radio" name="ClockFont" id="ClockFont02" onclick="setFont('dynamic')"><label for="ClockFont02">Δυναμικό</label>
@@ -357,15 +357,15 @@
 								<input type="radio" name="ClockFont" id="ClockFont03" onclick="setFont('alternate')"><label for="ClockFont03">Εναλλακτικό</label>
 								<br>
 								<input type="radio" name="ClockFont" id="ClockFont04" onclick="setFont('retro')"><label for="ClockFont04">Ρετρό</label>
-								</fieldset>
+								</details>
 								<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει την γραμματοσειρά των ρολογιών</small></div>
 							</div>
-							<div class="fieldset Sounds">
-								<fieldset>
-								<h2>
+							<div class="cpe-settings-fieldset Sounds">
+								<details class="cpe-settings-fieldset__content" open>
+								<summary><h2>
 								<span translate="no" class="cpe-icon material-icons">music_note</span>
 								Ήχοι
-								</h2>
+								</h2></summary>
 								<table>
 									<tr>
 										<td>
@@ -430,27 +430,27 @@
 										</td>
 									</tr>
 								</table>
-								</fieldset>
+								</details>
 								<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει τον ήχο που θα παίζει κάθε φορά που τελιώνει μια αφύπνηση ή ένας χρονοδιακόπτης</small></div>
 							</div>
-							<div class="fieldset Clock">
-								<fieldset>
-								<h2>
+							<div class="cpe-settings-fieldset Clock">
+								<details class="cpe-settings-fieldset__content" open>
+								<summary><h2>
 								<span translate="no" class="cpe-icon material-icons">schedule</span>
 								Ρολόι
-								</h2>
-								<div class="fieldset Clock01 Screensaver">
-									<fieldset>
-									<h2>
+								</h2></summary>
+								<div class="cpe-settings-fieldset Clock01 Screensaver">
+									<details class="cpe-settings-fieldset__content" open>
+									<summary><h2>
 									<span translate="no" class="cpe-icon material-icons">ambient_screen</span>
 									Προφύλαξη Οθόνης
-									</h2>
-									<div class="fieldset Clock_Screensaver01 WaitingTime">
-										<fieldset>
-										<h2>
+									</h2></summary>
+									<div class="cpe-settings-fieldset Clock_Screensaver01 WaitingTime">
+										<details class="cpe-settings-fieldset__content" open>
+										<summary><h2>
 										<span translate="no" class="cpe-icon material-icons">pending</span>
 										Χρόνος Αναμονής
-										</h2>
+										</h2></summary>
 										<input type="radio" name="Clock_Screensaver_WaitingTime" id="Clock_Screensaver_WaitingTime01" onclick="SetSSWaitingTime(0)"><label for="Clock_Screensaver_WaitingTime01">Χαμηλός</label>
 										<br>
 										<input type="radio" name="Clock_Screensaver_WaitingTime" id="Clock_Screensaver_WaitingTime02" onclick="SetSSWaitingTime(1)"><label for="Clock_Screensaver_WaitingTime02">Κανονικός</label>
@@ -458,15 +458,15 @@
 										<input type="radio" name="Clock_Screensaver_WaitingTime" id="Clock_Screensaver_WaitingTime03" onclick="SetSSWaitingTime(2)"><label for="Clock_Screensaver_WaitingTime03">Υψηλός</label>
 										<br>
 										<input type="radio" name="Clock_Screensaver_WaitingTime" id="Clock_Screensaver_WaitingTime04" onclick="SetSSWaitingTime(3)"><label for="Clock_Screensaver_WaitingTime04">Σε Παύση</label>
-										</fieldset>
+										</details>
 										<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει τον χρόνο ενεργοποίησης της προφύλαξη οθόνης μετά από αδράνεια</small></div>
 									</div>
-									<div class="fieldset Clock_Screensaver02 UpdateSpeed">
-										<fieldset>
-										<h2>
+									<div class="cpe-settings-fieldset Clock_Screensaver02 UpdateSpeed">
+										<details class="cpe-settings-fieldset__content" open>
+										<summary><h2>
 										<span translate="no" class="cpe-icon material-icons">speed</span>
 										Ταχύτητα Ενημέρωσης
-										</h2>
+										</h2></summary>
 										<input type="radio" name="Clock_Screensaver_UpdateSpeed" id="Clock_Screensaver_UpdateSpeed01" onclick="SetSSUpdateSpeed(0)"><label for="Clock_Screensaver_UpdateSpeed01">Υψηλή</label>
 										<br>
 										<input type="radio" name="Clock_Screensaver_UpdateSpeed" id="Clock_Screensaver_UpdateSpeed02" onclick="SetSSUpdateSpeed(1)"><label for="Clock_Screensaver_UpdateSpeed02">Κανονική</label>
@@ -474,22 +474,22 @@
 										<input type="radio" name="Clock_Screensaver_UpdateSpeed" id="Clock_Screensaver_UpdateSpeed03" onclick="SetSSUpdateSpeed(2)"><label for="Clock_Screensaver_UpdateSpeed03">Χαμηλή</label>
 										<br>
 										<input type="radio" name="Clock_Screensaver_UpdateSpeed" id="Clock_Screensaver_UpdateSpeed04" onclick="SetSSUpdateSpeed(3)"><label for="Clock_Screensaver_UpdateSpeed04">Σε Παύση</label>
-										</fieldset>
+										</details>
 										<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει τον ρυθμό ανανέωσης της θέσης του ρολογιού στην προφύλαξη οθόνης</small></div>
 									</div>
 									<input type="checkbox" name="Clock_Screensaver" id="Clock_Screensaver03" onclick="toggleScreensaverColor()" title="Το χρώμα του ρολογιού στην προφύλαξη οθόνης θα είναι λευκό"><label for="Clock_Screensaver03" title="Το χρώμα του ρολογιού στην προφύλαξη οθόνης θα είναι λευκό">Μη χρήση του χρωμάτος επισήμανσης</label>
-									</fieldset>
+									</details>
 								</div>
-								<div class="fieldset Clock02 Style">
-									<fieldset>
-									<h2>
+								<div class="cpe-settings-fieldset Clock02 Style">
+									<details class="cpe-settings-fieldset__content" open>
+									<summary><h2>
 									<span translate="no" class="cpe-icon material-icons">format_paint</span>
 									Στυλ
-									</h2>
+									</h2></summary>
 									<input type="radio" name="Clock_Style" id="Clock_Style01" onclick="SetClockStyle(0)"><label for="Clock_Style01">Ψηφιακό</label>
 									<br>
 									<input type="radio" name="Clock_Style" id="Clock_Style02" onclick="SetClockStyle(1)"><label for="Clock_Style02">Αναλογικό</label>
-									</fieldset>
+									</details>
 									<div style="margin:5px 0;"><small>Αυτή η ρύθμιση ορίζει το στυλ ρολογιού</small></div>
 								</div>
 								<input type="checkbox" name="Clock" id="Clock03" onclick="toggleClockSeconds()" title="Θα εμφανίζονται τα δευτερόλεπτα στο ρολόι"><label for="Clock03" title="Θα εμφανίζονται τα δευτερόλεπτα στο ρολόι">Εμφάνιση δευτερολέπτων</label>
@@ -497,7 +497,7 @@
 								<input type="checkbox" name="Clock" id="Clock04" onclick="toggleClockDate()" title="Δεν θα εμφανίζεται η ημερομηνία στο ρολόι"><label for="Clock04" title="Δεν θα εμφανίζεται η ημερομηνία στο ρολόι">Απόκρυψη ημερομηνίας</label>
 								<br>
 								<input type="checkbox" name="Clock" id="Clock05" onclick="toggleAnalogClockTicmarks()" title="Δεν θα εμφανίζονται σύμβολα τικ στο αναλογικό ρολόι"><label for="Clock05" title="Δεν θα εμφανίζονται σύμβολα τικ στο αναλογικό ρολόι">Απόκρυψη συμβόλων τικ στο αναλογικό ρολόι</label>
-								</fieldset>
+								</details>
 							</div>
 
 						</article>

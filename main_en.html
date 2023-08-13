@@ -308,12 +308,12 @@
 							<h2>Settings</h2>
 						</header>
 						<article>
-							<div class="fieldset AppTheme">
-								<fieldset>
-								<h2>
+							<div class="cpe-settings-fieldset AppTheme">
+								<details class="cpe-settings-fieldset__content" open>
+								<summary><h2>
 								<span translate="no" class="cpe-icon material-icons">palette</span>
 								App Theme
-								</h2>
+								</h2></summary>
 								<input type="radio" name="AppTheme" id="AppTheme01" onclick="colortheme('match-parent','light','match-parent','match-parent','duo')"><label for="AppTheme01">Automatic</label>
 								<br>
 								<input type="radio" name="AppTheme" id="AppTheme02" onclick="colortheme('match-parent','dark','match-parent','match-parent','duo')"><label for="AppTheme02">Automatic (Dark)</label>
@@ -324,16 +324,16 @@
 								<div>
 								<input type="radio" name="AppTheme" id="AppTheme05"><label for="AppTheme05">Custom</label>
 								</div>
-								</fieldset>
+								</details>
 								<div style="margin:5px 0;"><small>This setting sets Clock and Alarm's device theme</small></div>
 							</div>
 							
-							<div class="fieldset LandingPage">
-								<fieldset>
-								<h2>
+							<div class="cpe-settings-fieldset LandingPage">
+								<details class="cpe-settings-fieldset__content" open>
+								<summary><h2>
 								<span translate="no" class="cpe-icon material-icons">home</span>
 								Landing Page
-								</h2>
+								</h2></summary>
 								<input type="radio" name="LandingPage" id="LandingPage01" onclick="insertKey('ckal-default-page', 'clock')"><label for="LandingPage01">Clock</label>
 								<br>
 								<input type="radio" name="LandingPage" id="LandingPage02" onclick="insertKey('ckal-default-page', 'alarms')"><label for="LandingPage02">Alarms</label>
@@ -341,15 +341,15 @@
 								<input type="radio" name="LandingPage" id="LandingPage03" onclick="insertKey('ckal-default-page', 'stopwatch')"><label for="LandingPage03">Stopwatch</label>
 								<br>
 								<input type="radio" name="LandingPage" id="LandingPage04" onclick="insertKey('ckal-default-page', 'timer')"><label for="LandingPage04">Timer</label>
-								</fieldset>
+								</details>
 								<div style="margin:5px 0;"><small>This setting sets the page that will be shown each time Clock and Alarms starts</small></div>
 							</div>
-							<div class="fieldset ClockFont">
-								<fieldset>
-								<h2>
+							<div class="cpe-settings-fieldset ClockFont">
+								<details class="cpe-settings-fieldset__content" open>
+								<summary><h2>
 								<span translate="no" class="cpe-icon material-icons">title</span>
 								Clock Font Style
-								</h2>
+								</h2></summary>
 								<input type="radio" name="ClockFont" id="ClockFont01" onclick="setFont('standard')"><label for="ClockFont01">Standard</label>
 								<br>
 								<input type="radio" name="ClockFont" id="ClockFont02" onclick="setFont('dynamic')"><label for="ClockFont02">Dynamic</label>
@@ -357,16 +357,16 @@
 								<input type="radio" name="ClockFont" id="ClockFont03" onclick="setFont('alternate')"><label for="ClockFont03">Altenrate</label>
 								<br>
 								<input type="radio" name="ClockFont" id="ClockFont04" onclick="setFont('retro')"><label for="ClockFont04">Retro</label>
-								</fieldset>
+								</details>
 								<div style="margin:5px 0;"><small>This setting sets clock font</small></div>
 							</div>
 
-							<div class="fieldset Sounds">
-								<fieldset>
-								<h2>
+							<div class="cpe-settings-fieldset Sounds">
+								<details class="cpe-settings-fieldset__content" open>
+								<summary><h2>
 								<span translate="no" class="cpe-icon material-icons">music_note</span>
 								Sounds
-								</h2>
+								</h2></summary>
 								<table>
 									<tr>
 										<td>
@@ -431,27 +431,27 @@
 										</td>
 									</tr>
 								</table>
-								</fieldset>
+								</details>
 								<div style="margin:5px 0;"><small>This setting sets the sound that will play each time an alarm or a stopwatch ends</small></div>
 							</div>
-							<div class="fieldset Clock">
-								<fieldset>
-								<h2>
+							<div class="cpe-settings-fieldset Clock">
+								<details class="cpe-settings-fieldset__content" open>
+								<summary><h2>
 								<span translate="no" class="cpe-icon material-icons">schedule</span>
 								Clock
-								</h2>
-								<div class="fieldset Clock01 Clock_Screensaver">
-									<fieldset>
-									<h2>
+								</h2></summary>
+								<div class="cpe-settings-fieldset Clock01 Clock_Screensaver">
+									<details class="cpe-settings-fieldset__content" open>
+									<summary><h2>
 									<span translate="no" class="cpe-icon material-icons">ambient_screen</span>
 									Screensaver
-									</h2>
-									<div class="fieldset Clock_Screensaver01 WaitingTime">
-										<fieldset>
-										<h2>
+									</h2></summary>
+									<div class="cpe-settings-fieldset Clock_Screensaver01 WaitingTime">
+										<details class="cpe-settings-fieldset__content" open>
+										<summary><h2>
 										<span translate="no" class="cpe-icon material-icons">pending</span>
 										Waiting Time
-										</h2>
+										</h2></summary>
 										<input type="radio" name="Clock_Screensaver_WaitingTime" id="Clock_Screensaver_WaitingTime01" onclick="SetSSWaitingTime(0)"><label for="Clock_Screensaver_WaitingTime01">Low</label>
 										<br>
 										<input type="radio" name="Clock_Screensaver_WaitingTime" id="Clock_Screensaver_WaitingTime02" onclick="SetSSWaitingTime(1)"><label for="Clock_Screensaver_WaitingTime02">Normal</label>
@@ -459,16 +459,16 @@
 										<input type="radio" name="Clock_Screensaver_WaitingTime" id="Clock_Screensaver_WaitingTime03" onclick="SetSSWaitingTime(2)"><label for="Clock_Screensaver_WaitingTime03">High</label>
 										<br>
 										<input type="radio" name="Clock_Screensaver_WaitingTime" id="Clock_Screensaver_WaitingTime04" onclick="SetSSWaitingTime(3)"><label for="Clock_Screensaver_WaitingTime04">Paused</label>
-										</fieldset>
+										</details>
 										<div style="margin:5px 0;"><small>This setting sets the screensaver activation time after inactivity</small></div>
 									</div>
 
-									<div class="fieldset Clock_Screensaver02 UpdateSpeed">
-										<fieldset>
-										<h2>
+									<div class="cpe-settings-fieldset Clock_Screensaver02 UpdateSpeed">
+										<details class="cpe-settings-fieldset__content" open>
+										<summary><h2>
 										<span translate="no" class="cpe-icon material-icons">speed</span>
 										Update Speed
-										</h2>
+										</h2></summary>
 										<input type="radio" name="Clock_Screensaver_UpdateSpeed" id="Clock_Screensaver_UpdateSpeed01" onclick="SetSSUpdateSpeed(0)"><label for="Clock_Screensaver_UpdateSpeed01">High</label>
 										<br>
 										<input type="radio" name="Clock_Screensaver_UpdateSpeed" id="Clock_Screensaver_UpdateSpeed02" onclick="SetSSUpdateSpeed(1)"><label for="Clock_Screensaver_UpdateSpeed02">Normal</label>
@@ -476,22 +476,22 @@
 										<input type="radio" name="Clock_Screensaver_UpdateSpeed" id="Clock_Screensaver_UpdateSpeed03" onclick="SetSSUpdateSpeed(2)"><label for="Clock_Screensaver_UpdateSpeed03">Low</label>
 										<br>
 										<input type="radio" name="Clock_Screensaver_UpdateSpeed" id="Clock_Screensaver_UpdateSpeed04" onclick="SetSSUpdateSpeed(3)"><label for="Clock_Screensaver_UpdateSpeed04">Paused</label>
-										</fieldset>
+										</details>
 										<div style="margin:5px 0;"><small>This setting sets clock's position refresh rate in the screensaver</small></div>
 									</div>
 									<input type="checkbox" name="Clock_Screensaver" id="Clock_Screensaver03" onclick="toggleScreensaverColor()" title="Clock's color in the Screensaver will be white"><label for="Clock_Screensaver03" title="Clock's color in the Screensaver will be white">No use of Highlight Color</label>
-									</fieldset>
+									</details>
 								</div>
-								<div class="fieldset Clock02 Style">
-									<fieldset>
-									<h2>
+								<div class="cpe-settings-fieldset Clock02 Style">
+									<details class="cpe-settings-fieldset__content" open>
+									<summary><h2>
 									<span translate="no" class="cpe-icon material-icons">format_paint</span>
 									Style
-									</h2>
+									</h2></summary>
 									<input type="radio" name="Clock_Style" id="Clock_Style01" onclick="SetClockStyle(0)"><label for="Clock_Style01">Digital</label>
 									<br>
 									<input type="radio" name="Clock_Style" id="Clock_Style02" onclick="SetClockStyle(1)"><label for="Clock_Style02">Analog</label>
-									</fieldset>
+									</details>
 									<div style="margin:5px 0;"><small>This setting sets clock style</small></div>
 								</div>
 								<input type="checkbox" name="Clock" id="Clock03" onclick="toggleClockSeconds()" title="Seconds will be shown in the Clock"><label for="Clock03" title="Seconds will be shown in the Clock">Show seconds</label>
@@ -499,7 +499,7 @@
 								<input type="checkbox" name="Clock" id="Clock04" onclick="toggleClockDate()" title="Date will be hidden in the Clock"><label for="Clock04" title="Date will be hidden in the Clock">Hide date</label>
 								<br>
 								<input type="checkbox" name="Clock" id="Clock05" onclick="toggleAnalogClockTicmarks()" title="No tic marks will be shown in analog clock"><label for="Clock05" title="No tic marks will be shown in analog clock">Hide tic marks in analog clock</label>
-								</fieldset>
+								</details>
 							</div>
 
 
