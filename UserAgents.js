@@ -20,26 +20,26 @@ document.getElementById("Handler").className += " mpisto-servers"
 	var ua_agent = navigator.userAgent
 
 	if ( (ua_agent.match("Safari/")) && !( (ua_agent.match("Chrome/")) || (ua_agent.match("YNGT")) ) ) { // Safari
-		window.oldBrowser = ua_agent.match(/Version\/(\d+)/)[1] < 15
+		window.oldBrowser = ua_agent.match(/Version\/(\d+)/)[1] < 16
 	}
 
 	if ( (ua_agent.match("Firefox/")) && !( (ua_agent.match("PaleMoon/")) ) ) { // Mozilla Firefox
-		window.oldBrowser = ua_agent.match(/Firefox\/(\d+)/)[1] < 100
+		window.oldBrowser = ua_agent.match(/Firefox\/(\d+)/)[1] < 113
 	}
 
 	if ( (ua_agent.match("PaleMoon/")) ) { // Pale Moon
-		window.oldBrowser = ua_agent.match(/PaleMoon\/(\d+)/)[1] < 31
+		window.oldBrowser = ua_agent.match(/PaleMoon\/(\d+)/)[1] < 32
 	document.querySelector('html').classList.add('pale-moon')
 	}
 
 
 	if ( (ua_agent.match("Chrome/")) && !( (ua_agent.match("Edge/")) ) ) { // Google Chrome
-		window.oldBrowser = ua_agent.match(/Chrome\/(\d+)/)[1] < 100
+		window.oldBrowser = ua_agent.match(/Chrome\/(\d+)/)[1] < 113
 	}
 	
 
 	window.oldBrowser =( 
-						(window.oldBrowser) ||						    // Old Chrome, Firefox, Safari and Pale Moon
+						(window.oldBrowser) ||						    // Old Chrome, Firefox and Safari 
 						(ua_agent.match("Trident")) ||					// Internet Explorer 				
 						(ua_agent.match("Presto")) || 					// Classic Opera
 						(ua_agent.match("Tessera")) || 					// 4x4 Browser
@@ -51,7 +51,8 @@ document.getElementById("Handler").className += " mpisto-servers"
 						(ua_agent.match("PLAYSTATION PORTABLE")) || 	// PSP Browser
 						(ua_agent.match("Edge")) || 					// Classic Microsoft Edge
 						(ua_agent.match("BlackBerry")) || 				// Blackberry Browser
-						(ua_agent.match("IEMobile")) 					// Phone Internet Explorer
+						(ua_agent.match("IEMobile")) ||	 				// Phone Internet Explorer
+						(ua_agent.match("PaleMoon"))					// Pale Moon/
 						)
 	
 	if (window.oldBrowser) {

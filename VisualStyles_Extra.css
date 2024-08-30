@@ -74,7 +74,7 @@
 .visualstyle-basic .tabs a:hover {
 	color:var(--luna-foreground-color-hover);
 	border-color:var(--luna-foreground-color-hover);
-	background-color:rgba(var(--luna-hyperlink-background-color-rgb),0.2);
+	background-color:rgb(var(--luna-hyperlink-background-color-rgb) / 0.2);
 }
 
 .visualstyle-basic [page*="clock"] .tabs .clock,
@@ -86,7 +86,7 @@
 .visualstyle-basic .tabs .cpe-dropdown:focus-within > a {
 	color:var(--luna-foreground-color-hover);
 	border-color:var(--luna-foreground-color-hover);
-	background-color:rgba(var(--luna-hyperlink-background-color-rgb),0.4);
+	background-color:rgb(var(--luna-hyperlink-background-color-rgb) / 0.4);
 }
 
 .visualstyle-basic .proc_page .upper span:hover, 
@@ -136,10 +136,10 @@
 .visualstyle-simple [page*="settings"] .tabs .settings,
 .visualstyle-simple .tabs .cpe-dropdown:focus > a,
 .visualstyle-simple .tabs .cpe-dropdown:focus-within > a {
-	background-color:rgba(var(--canvas-secondary-background-color-hover-rgb),var(--mica-opacity-2));
+	background-color:rgb(var(--canvas-secondary-background-color-hover-rgb) / var(--mica-opacity-2));
 	color:var(--canvas-secondary-foreground-color-inverted);
 	animation:none;
-	border-color:rgba(var(--canvas-foreground-color-rgb),0.2);
+	border-color:rgb(var(--canvas-foreground-color-rgb) / 0.2);
 }
 
 
@@ -162,5 +162,5 @@
 	color:var(--canvas-secondary-background-color);
 	box-shadow:none;
 	animation:none;
-	border-color:rgba(var(--canvas-secondary-background-color-rgb),0.5);
+	border-color:rgb(var(--canvas-secondary-background-color-rgb) / 0.5);
 }

@@ -29,9 +29,6 @@ window.ThemingEngine_DesktopColor = GetDesktop();
 window.ThemingEngine_HighlightColor = GetHighlight();
 window.ThemingEngine_ActiveTitleColor = GetActiveTitle();
 window.ThemingEngine_InactiveTitleColor = GetInactiveTitle();
-/* Contrast Values */
-window.ThemingEngine_LargeTextContrast = 3.00;
-window.ThemingEngine_SmallTextContrast = 4.50;
 
 /*
 **
@@ -311,7 +308,7 @@ function getColorContrastOfAnElement(elem,bg="Background Color",fg="Text Color")
 	if (elem) {
 	elembg = getComputedStyle(elem).getPropertyValue("background-color");
 	elemfg = getComputedStyle(elem).getPropertyValue("color");
-	contrast = chroma.contrast(elemfg,elembg)
+	contrast = getContrast(elemfg,elembg)
 	alert("Color contrast of " + fg + " on " + bg + " is " + contrast);
 	}
 }
@@ -326,6 +323,10 @@ function SupportsColorContrast() {
 
 function DisabledColorManagement() {
 	return ( (ForcedColors()) || (document.querySelector("body.no-color-management") ) ||  (window.ThemingEngine_ActiveVisualColors === 'nocolormanagement') )
+}
+
+function APCAMode() {
+	return (document.querySelector("body.has-apca-contrast-rules") )
 }
 
 function ForcedColors() {
@@ -631,7 +632,7 @@ function GetDesktop() {
 	if (DisabledColorManagement()) {
 		return GetSystemColorValue('--desktop-background-color')
 	} else if (getComputedStyle(GetActiveThemeConfiguration()).getPropertyValue("--desktop-background-color") === 'auto') {
-		return GetCanvas();
+		return window.ThemingEngine_PageColor;
 
 	} else {
 		return getComputedStyle(GetActiveThemeConfiguration()).getPropertyValue("--desktop-background-color").trim();
@@ -721,7 +722,8 @@ function GetActiveText() {
 	} else if (getComputedStyle(GetActiveThemeConfiguration()).getPropertyValue("--active-text-background-color") === 'auto') {
 		var color = ThemingEngine_HyperlinkColor;
 		var color2 = ThemingEngine_PageColorFG;
-		return ColorMix(color2,color,1.2);
+		var h = chroma(color).get("hsl.h");
+		return chroma(ColorMix(color2,color,1.2)).set("hsl.h",(h + 30) % 360 );
 	} else {
 		return getComputedStyle(GetActiveThemeConfiguration()).getPropertyValue("--active-text-background-color").trim();
 	}
@@ -779,7 +781,8 @@ function GetActiveTitle() {
 	} else if (getComputedStyle(GetActiveThemeConfiguration()).getPropertyValue("--active-title-background-color") === 'auto') {
 		var color = ThemingEngine_HyperlinkColor;
 		var color2 = ColorInvert(ThemingEngine_PageColorFG);
-		return ColorMix(color2,color,1.6);
+		var h = chroma(color).get("hsl.h");
+		return chroma(ColorMix(color2,color,1.6)).set("hsl.h",(h + 30) % 360 );
 	} else {
 		return getComputedStyle(GetActiveThemeConfiguration()).getPropertyValue("--active-title-background-color").trim();
 	}
@@ -863,42 +866,49 @@ function GetCustomFont4() {
 }
 
 
-function ContrastRatio() { // Used for Text
-
-	if (ThemingEngine_ContrastMode == 'auto') {
-		return (window.matchMedia('(prefers-contrast: more)').matches) ? 1.55 : (window.matchMedia('(prefers-contrast: custom)').matches) ? 1.275 : 1.0
-	} else if (ThemingEngine_ContrastMode == 'low') { // 4.5
-		return 1.00
-	} else if (ThemingEngine_ContrastMode == 'custom1') { // Custom
-		return 1.06875
-	} else if (ThemingEngine_ContrastMode == 'med-low') {
-		return 1.1375
-	} else if (ThemingEngine_ContrastMode == 'custom2') { // Custom
-		return 1.20625
-	} else if (ThemingEngine_ContrastMode == 'med') {
-		return 1.275
-	} else if (ThemingEngine_ContrastMode == 'custom3') { // Custom
-		return 1.34375
-	} else if (ThemingEngine_ContrastMode == 'med-hi') {
-		return 1.4125
-	} else if (ThemingEngine_ContrastMode == 'custom4') { // Custom
-		return 1.48125
-	} else if (ThemingEngine_ContrastMode == 'hi') { // 7
-		return 1.55
-	} else if (ThemingEngine_ContrastMode == 'custom5') { // Custom
-		return 1.61875
-	} else if (ThemingEngine_ContrastMode == 'hi-vhi') {
-		return 1.6875
-	} else if (ThemingEngine_ContrastMode == 'custom6') { // Custom
-		return 1.75625
-	} else if (ThemingEngine_ContrastMode == 'vhi') {
-		return 1.825
-	} else {
-		return (window.matchMedia('(prefers-contrast: more)').matches) ? 1.55 : (window.matchMedia('(prefers-contrast: custom)').matches) ? 1.275 : 1.0
+function ContrastRatio() { // Used for Text (Non-APCA mode only)
+	if (APCAMode()) {
+		return ContrastRatioFormControls() // Not for non-APCA mode
 	}
+	var result = 0
+	if (ThemingEngine_ContrastMode == 'auto') {
+		result = (window.matchMedia('(prefers-contrast: more)').matches) ? 2.50 : (window.matchMedia('(prefers-contrast: custom)').matches) ? 1.25 : 0.0
+	} else if (ThemingEngine_ContrastMode == 'low') { // 4.5
+		result = 0.00
+	} else if (ThemingEngine_ContrastMode == 'custom1') { // Custom
+		result = 0.3125
+	} else if (ThemingEngine_ContrastMode == 'med-low') {
+		result = 0.625
+	} else if (ThemingEngine_ContrastMode == 'custom2') { // Custom
+		result = 0.9375
+	} else if (ThemingEngine_ContrastMode == 'med') {
+		result = 1.25
+	} else if (ThemingEngine_ContrastMode == 'custom3') { // Custom
+		result = 1.5625
+	} else if (ThemingEngine_ContrastMode == 'med-hi') {
+		result = 1.875
+	} else if (ThemingEngine_ContrastMode == 'custom4') { // Custom
+		result = 2.1875
+	} else if (ThemingEngine_ContrastMode == 'hi') { // 7
+		result = 2.50
+	} else if (ThemingEngine_ContrastMode == 'custom5') { // Custom
+		result = 2.8125
+	} else if (ThemingEngine_ContrastMode == 'hi-vhi') {
+		result = 3.125
+	} else if (ThemingEngine_ContrastMode == 'custom6') { // Custom
+		result = 3.4375
+	} else if (ThemingEngine_ContrastMode == 'vhi') {
+		result = 3.75
+	} else {
+		result = (window.matchMedia('(prefers-contrast: more)').matches) ? 2.50 : (window.matchMedia('(prefers-contrast: custom)').matches) ? 1.25 : 0.0
+	}
+	if (APCAMode()) { // Unused
+		result*=10
+	}
+	return result
 }
 
-function ContrastRatio2() { // Used For Dropdown
+function ContrastRatioDropdown() { // Used For Dropdown
 
 	if (ThemingEngine_ContrastMode == 'auto') {
 		return (window.matchMedia('(prefers-contrast: more)').matches) ? 0.35 : (window.matchMedia('(prefers-contrast: custom)').matches) ? 0.30 : 0.25
@@ -933,42 +943,46 @@ function ContrastRatio2() { // Used For Dropdown
 	}
 }
 
-function ContrastRatio3() { // Used for Form Controls
-
+function ContrastRatioFormControls() { // Used for Form Controls (And Text in APCA Mode)
+	var result = 0
 	if (ThemingEngine_ContrastMode == 'auto') {
-		return (window.matchMedia('(prefers-contrast: more)').matches) ? 1.5 : (window.matchMedia('(prefers-contrast: custom)').matches) ? 1.25 : 1.0
+		result = (window.matchMedia('(prefers-contrast: more)').matches) ? 1.5 : (window.matchMedia('(prefers-contrast: custom)').matches) ? 0.75 : 0.0
 	} else if (ThemingEngine_ContrastMode == 'low') { // 3
-		return 1.00
+		result = 0.00
 	} else if (ThemingEngine_ContrastMode == 'custom1') { // Custom
-		return 1.0625
+		result = 0.1875
 	} else if (ThemingEngine_ContrastMode == 'med-low') {
-		return 1.125
+		result = 0.375
 	} else if (ThemingEngine_ContrastMode == 'custom2') { // Custom
-		return 1.1875
+		result = 0.5625
 	} else if (ThemingEngine_ContrastMode == 'med') {
-		return 1.25
+		result = 0.75
 	} else if (ThemingEngine_ContrastMode == 'custom3') { // Custom
-		return 1.3125
+		result = 0.9375
 	} else if (ThemingEngine_ContrastMode == 'med-hi') {
-		return 1.375
+		result = 1.125
 	} else if (ThemingEngine_ContrastMode == 'custom4') { // Custom
-		return 1.4375
+		result = 1.3125
 	} else if (ThemingEngine_ContrastMode == 'hi') { // 4.5
-		return 1.5
+		result = 1.5
 	} else if (ThemingEngine_ContrastMode == 'custom5') { // Custom
-		return 1.5625
+		result = 1.6875
 	} else if (ThemingEngine_ContrastMode == 'hi-vhi') {
-		return 1.625
+		result = 1.875
 	} else if (ThemingEngine_ContrastMode == 'custom6') { // Custom
-		return 1.6875
+		result = 2.0625
 	} else if (ThemingEngine_ContrastMode == 'vhi') {
-		return 1.75
+		result = 2.25
 	} else {
-		return (window.matchMedia('(prefers-contrast: more)').matches) ? 1.5 : (window.matchMedia('(prefers-contrast: custom)').matches) ? 1.25 : 1.0
+		result = (window.matchMedia('(prefers-contrast: more)').matches) ? 1.5 : (window.matchMedia('(prefers-contrast: custom)').matches) ? 0.75 : 0.0
 	}
+	if (APCAMode()) {
+		result*=10
+	}
+	return result
 }
 
-function ContrastRatio4() { // Used For Inactive Text
+function ContrastRatioAutoInactiveText() { // Used For Inactive Text
 
 	if (ThemingEngine_ContrastMode == 'auto') {
 		return (window.matchMedia('(prefers-contrast: more)').matches) ? 0.86 : (window.matchMedia('(prefers-contrast: custom)').matches) ? 0.78 : 0.7
@@ -1004,6 +1018,29 @@ function ContrastRatio4() { // Used For Inactive Text
 }
 
 
+function getLargeTextContrast() {
+	if (APCAMode()) {
+		return 45
+	} else {
+		return 3.00
+	}
+}
+
+function getSmallTextContrast() {
+	if (APCAMode()) {
+		return 60
+	} else {
+		return 4.50
+	}
+}
+
+function getContrast(color1,color2) {
+	if (APCAMode()) {
+		return Math.abs(chroma.contrastAPCA(color1,color2));
+	} else {
+		return chroma.contrast(color1,color2);
+	}
+}
 
 function CompileGenericColors(color) {
 var page = color;
@@ -1027,7 +1064,7 @@ if (isLightColor(page)) { // ( chroma(page).get('hsl.l') < 0.5)
 		progressh = 230
 //		messageh = -1
 		
-		contrast = window.ThemingEngine_SmallTextContrast*ContrastRatio()*1
+		contrast = getSmallTextContrast()+ContrastRatio()
 
 	for (let i = 0; i < colors.length; i++) {
  		var color = chroma('hsl(0,' + saturation + ',' + colors[i] + ')').hex(); // Base Color
@@ -1038,7 +1075,7 @@ if (isLightColor(page)) { // ( chroma(page).get('hsl.l') < 0.5)
  		var progress = chroma(color).set('hsl.h',progressh+hueshift); // Progress
  		var info = chroma(color).set('hsl.s',0); // Message
  
-		if ( ((chroma.contrast(page, alert)) >= contrast) && ((chroma.contrast(page, pause)) >= contrast) && ((chroma.contrast(page, warn)) >= contrast) && ((chroma.contrast(page, done)) >= contrast) && ((chroma.contrast(page, progress)) >= contrast) && ((chroma.contrast(page, info)) >= contrast) ) {
+		if ( ((getContrast(page, alert)) >= contrast) && ((getContrast(page, pause)) >= contrast) && ((getContrast(page, warn)) >= contrast) && ((getContrast(page, done)) >= contrast) && ((getContrast(page, progress)) >= contrast) && ((getContrast(page, info)) >= contrast) ) {
 			return [alert, pause, warn, done, progress, info];
 		}
 	}
@@ -1066,11 +1103,12 @@ if (isLightColor(page)) {
 		g3h = 80
 		g4h = 340
 		g5h = 280
+		g6h = 20
 
 	
-		contrast = window.ThemingEngine_SmallTextContrast*ContrastRatio()*1
-		colors1 = [0,0,0,0,0];
-		remcolors = 5;
+		contrast = getSmallTextContrast()+ContrastRatio()
+		colors1 = [0,0,0,0,0,0];
+		remcolors = 6;
 
 	for (let i = 0; i < colors.length; i++) {
  		var color = chroma('hsl(0,' + saturation + ',' + colors[i] + ')').hex(); // Base Color
@@ -1079,29 +1117,36 @@ if (isLightColor(page)) {
 		var g3 = chroma(color).set('hsl.h',g3h+hueshift); // G3
 		var g4 = chroma(color).set('hsl.h',g4h+hueshift); // G4
 		var g5 = chroma(color).set('hsl.h',g5h+hueshift); // G5
+		var g6 = chroma(color).set('hsl.h',g6h+hueshift); // G5
+		
 ///
-		if ( ((chroma.contrast(page, g1)) >= contrast) && (colors1[0] === 0) ) {
+		if ( ((getContrast(page, g1)) >= contrast) && (colors1[0] === 0) ) {
 			colors1[0] = g1;
 			remcolors = (remcolors-1);
 			i = 0;
 		}
-		if ( ((chroma.contrast(page, g2)) >= contrast) && (colors1[1] === 0) ) {
+		if ( ((getContrast(page, g2)) >= contrast) && (colors1[1] === 0) ) {
 			colors1[1] = g2;
 			remcolors = (remcolors-1);
 			i = 0;
 		}
-		if ( ((chroma.contrast(page, g3)) >= contrast) && (colors1[2] === 0) ) {
+		if ( ((getContrast(page, g3)) >= contrast) && (colors1[2] === 0) ) {
 			colors1[2] = g3;
 			remcolors = (remcolors-1);
 			i = 0;
 		}
-		if ( ((chroma.contrast(page, g4)) >= contrast) && (colors1[3] === 0) ) {
+		if ( ((getContrast(page, g4)) >= contrast) && (colors1[3] === 0) ) {
 			colors1[3] = g4;
 			remcolors = (remcolors-1);
 			i = 0;
 		}
-		if ( ((chroma.contrast(page, g5)) >= contrast) && (colors1[4] === 0) ) {
+		if ( ((getContrast(page, g5)) >= contrast) && (colors1[4] === 0) ) {
 			colors1[4] = g5;
+			remcolors = (remcolors-1);
+			i = 0;
+		}
+		if ( ((getContrast(page, g6)) >= contrast) && (colors1[5] === 0) ) {
+			colors1[5] = g6;
 			remcolors = (remcolors-1);
 			i = 0;
 		}
@@ -1111,7 +1156,7 @@ if (isLightColor(page)) {
 		}
 	}
 
-	return [g1,g2,g3,g4,g5];
+	return [g1,g2,g3,g4,g5,g6];
 
  
 }
@@ -1246,7 +1291,7 @@ function SliderColorSaturation() {
 ** Solo = duo, solo (Only two supported)
 ** All above = match-parent (Inherits the currently applied value)
 */
-function colortheme(style='match-parent', theme='match-parent', hue='match-parent', saturation='match-parent', solo='match-parent', repaint=true, save=true, notfromrange=true) {
+function colortheme(style='match-parent', theme='match-parent', hue='match-parent', saturation='match-parent', solo='match-parent', repaint=true, save=true, notfromrange=true,updateinput=true) {
 	if (style === 'match-parent') {
 		style = window.ThemingEngine_ActiveColorFilter;
 	}
@@ -1333,32 +1378,34 @@ function colortheme(style='match-parent', theme='match-parent', hue='match-paren
 		insertKey('color-sat', saturation );
 	}
 
-// Color Styles
-	var x = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-color-styles li.selected");
-	if (x) {
-		x.classList.remove("selected");
-	}
-	var y = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-color-styles li[data-color-style='" + style + "']");
-	if (y) {
-		y.classList.add("selected")
-	}
-// Device Themes
-	var x = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-device-themes li.selected");
-	if (x) {
-		x.classList.remove("selected");
-	}
-	var y = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-device-themes li[data-device-theme='" + selected_theme + "']");
-	if (y) {
-		y.classList.add("selected")
-	}
-// Color Style Behaviors
-	var x = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-solo-modes li.selected");
-	if (x) {
-		x.classList.remove("selected");
-	}
-	var y = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-solo-modes li[data-solo-mode='" + solo + "']");
-	if (y) {
-		y.classList.add("selected")
+	if (updateinput) {
+	// Color Styles
+		var x = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-color-styles li.selected");
+		if (x) {
+			x.classList.remove("selected");
+		}
+		var y = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-color-styles li[data-color-style='" + style + "']");
+		if (y) {
+			y.classList.add("selected")
+		}
+	// Device Themes
+		var x = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-device-themes li.selected");
+		if (x) {
+			x.classList.remove("selected");
+		}
+		var y = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-device-themes li[data-device-theme='" + selected_theme + "']");
+		if (y) {
+			y.classList.add("selected")
+		}
+	// Color Style Behaviors
+		var x = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-solo-modes li.selected");
+		if (x) {
+			x.classList.remove("selected");
+		}
+		var y = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-solo-modes li[data-solo-mode='" + solo + "']");
+		if (y) {
+			y.classList.add("selected")
+		}
 	}
 
 
@@ -1367,16 +1414,18 @@ function colortheme(style='match-parent', theme='match-parent', hue='match-paren
 		var muststay = !(DisabledColorManagement());
 	}
 
-	var range = document.querySelector('input[type="range"].colorhue');
-	var range2 = document.querySelector('input[type="range"].colorsat');
-	if (range) {
-		range.value = window.ThemingEngine_ColorFilterHueShift;
-	}
-	if (range2) {
-		range2.value = window.ThemingEngine_ColorFilterSaturation;
-	}
-	if (notfromrange) {
-		UpdateRangeInputs();
+	if (updateinput) {
+		var range = document.querySelector('input[type="range"].colorhue');
+		var range2 = document.querySelector('input[type="range"].colorsat');
+		if (range) {
+			range.value = window.ThemingEngine_ColorFilterHueShift;
+		}
+		if (range2) {
+			range2.value = window.ThemingEngine_ColorFilterSaturation;
+		}
+		if (notfromrange) {
+			UpdateRangeInputs();
+		}
 	}
 
 
@@ -1394,28 +1443,29 @@ function SliderContrastMode() {
 }
 
 
-function contrastmode(theme='auto', repaint=true, save=true,notfromrange=true) {
+function contrastmode(theme='auto', repaint=true, save=true,notfromrange=true,updateinput=true) {
 	window.ThemingEngine_ContrastMode = theme
 	if (save) {
 		insertKey('contrast-mode', theme );
 	}
-	var x = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-contrast-modes li.selected");
-	if (x) {
-		x.classList.remove("selected");
-	}
-	var y = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-contrast-modes li[data-contrast-mode='" + theme + "']");
-	if (y) {
-		y.classList.add("selected")
-	}
-	var range = document.querySelector('input[type="range"].contrastratio');
-	if (range) {
-		range2 = ['auto','low','custom1','med-low','custom2','med','custom3','med-hi','custom4','hi','custom5','hi-vhi','custom6','vhi'].indexOf(theme)
-		range.value = range2;
-		if (notfromrange) {
-			UpdateRangeInputs();
+	if (updateinput) {
+		var x = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-contrast-modes li.selected");
+		if (x) {
+			x.classList.remove("selected");
+		}
+		var y = document.querySelector(".cpe-dropdown .cpe-dropdown__content .cpe-list.cpe-contrast-modes li[data-contrast-mode='" + theme + "']");
+		if (y) {
+			y.classList.add("selected")
+		}
+		var range = document.querySelector('input[type="range"].contrastratio');
+		if (range) {
+			range2 = ['auto','low','custom1','med-low','custom2','med','custom3','med-hi','custom4','hi','custom5','hi-vhi','custom6','vhi'].indexOf(theme)
+			range.value = range2;
+			if (notfromrange) {
+				UpdateRangeInputs();
+			}
 		}
 	}
-
 	if (repaint) {
 		CompileThemingEngine(false);
 	}
@@ -1620,12 +1670,12 @@ function ColorHover2(color,color2) {
 
 // Conversion for R,G,B syntax
 function ColorRGB(color) {
-	return chroma(color).get('rgb.r') + ',' + chroma(color).get('rgb.g') + ',' + chroma(color).get('rgb.b');
+	return chroma(color).get('rgb.r') + ' ' + chroma(color).get('rgb.g') + ' ' + chroma(color).get('rgb.b');
 }
 
 function isLightColor(color) {
-	var c1 = (chroma.contrast('#000000',  chroma(color)))
-	var c2 = (chroma.contrast('#ffffff',  chroma(color)))
+	var c1 = (getContrast('#000000',  chroma(color)))
+	var c2 = (getContrast('#ffffff',  chroma(color)))
 	return (c1 > c2);
 
 /*
@@ -1636,8 +1686,8 @@ function isLightColor(color) {
 }
 
 function isSemiLightColor(color) {
-	var c1 = (chroma.contrast(getComputedStyle(document.querySelector('body')).getPropertyValue("--light-theme-text-background-color"),  chroma(color)))
-	var c2 = (chroma.contrast(getComputedStyle(document.querySelector('body')).getPropertyValue("--dark-theme-text-background-color"),  chroma(color)))
+	var c1 = (getContrast(getComputedStyle(document.querySelector('body')).getPropertyValue("--light-theme-text-background-color"),  chroma(color)))
+	var c2 = (getContrast(getComputedStyle(document.querySelector('body')).getPropertyValue("--dark-theme-text-background-color"),  chroma(color)))
 	return (c1 > c2);
 /*
 	return chroma.deltaE('#e6e6e6', color) >= chroma.deltaE('#3a3a3a', color);
@@ -1650,18 +1700,18 @@ function isDarkColor(color) {
 }
 
 function isSuitableColorText(color,color2) {
-var contrast = window.ThemingEngine_SmallTextContrast*ContrastRatio()
-return ((chroma.contrast(color, color2)) >= contrast)
+var contrast = getSmallTextContrast()+ContrastRatio()
+return ((getContrast(color, color2)) >= contrast)
 }
 
 function isSuitableColorFormControls(color,color2) {
-var contrast = window.ThemingEngine_LargeTextContrast*ContrastRatio3()
-return ((chroma.contrast(color, color2)) >= contrast) // For Border Color
+var contrast = getLargeTextContrast()+ContrastRatioFormControls()
+return ((getContrast(color, color2)) >= contrast) // For Border Color
 }
 
 function getDefaultHyperlinkTextDecoration(color,color2) {
-var contrast = window.ThemingEngine_LargeTextContrast / 2.0
-return ((chroma.contrast(color, color2)) >= contrast) ? 'none' : 'underline' // For Border Color
+var contrast = getLargeTextContrast() / 2.0
+return ((getContrast(color, color2)) >= contrast) ? 'none' : 'underline' // For Border Color
 }
 
 
@@ -1671,9 +1721,10 @@ return ((chroma.contrast(color, color2)) >= contrast) ? 'none' : 'underline' // 
 /* Used to udpate all dynamical variables */
 function CompileThemingEngine(refresh=true) {
 if (refresh === true) {
-	colortheme('match-parent', 'match-parent', 'match-parent', 'match-parent', 'match-parent', false,false);
+	colortheme('match-parent', 'match-parent', 'match-parent', 'match-parent', 'match-parent', false,false,true,false);
+
 	var cmode = window.ThemingEngine_ContrastMode;
-	contrastmode(cmode, false,false);
+	contrastmode(cmode, false,false,true,false);
 	/** Foreground Colors 
 	document.querySelector('html').style.setProperty("--light-theme-foreground-color-hover", ColorHover(getComputedStyle(document.querySelector('html')).getPropertyValue("--light-theme-foreground-color")) );
 	document.querySelector('html').style.setProperty("--dark-theme-foreground-color-hover", ColorHover(getComputedStyle(document.querySelector('html')).getPropertyValue("--dark-theme-foreground-color")) );
@@ -1720,8 +1771,8 @@ if ((getComputedStyle(GetActiveThemeConfiguration()).getPropertyValue("--canvas-
 
 var content_color2 = ColorHover(content_color);
 
-var adjustment = ContrastRatio2();
-window.ThemingEngine_FinalContrast = ContrastRatio4();
+var adjustment = ContrastRatioDropdown();
+window.ThemingEngine_FinalContrast = ContrastRatioAutoInactiveText();
 
 	if (lightPage) {
 		var lightness = '#000000';
@@ -1755,11 +1806,11 @@ if ((getComputedStyle(GetActiveThemeConfiguration()).getPropertyValue("--canvas-
 	var lightDropdown = isLightColor(dropdowncolor);
 	if (lightDropdown) {
 		var lightnessDropdown = '#000000';
-		var tabscPage = '255,255,255';
+		var tabscPage = '255 255 255';
 		var tabsoPage = 0.1 + (chroma(dropdowncolor).luminance() * 0.4 );
 	} else {
 		var lightnessDropdown = '#ffffff';
-		var tabscPage = '58,58,58';
+		var tabscPage = '58 58 58';
 		var tabsoPage = 0.1 + ((1 - chroma(dropdowncolor).luminance()) * 0.4 );
 	}
 
@@ -1825,7 +1876,7 @@ var img = GetDesktopImage();
 if (img == '') {
 	var deskfilter = 'none'
 } else {
-	var deskfilter = 'drop-shadow(0 0 6.5px rgba(var(--desktop-text-foreground-color-rgb),0.75))'
+	var deskfilter = 'drop-shadow(0 0 6.5px rgb(var(--desktop-text-foreground-color-rgb) / 0.75))'
 }
 
 var headertext_color= GetDesktopText();
@@ -1864,10 +1915,10 @@ window.ThemingEngine_HyperlinkColor = link_color;
 
 	var lightLink = isLightColor(link_color);
 	if (lightLink) {
-		var tabscLink = '255,255,255';
+		var tabscLink = '255 255 255';
 		var tabsoLink = 0.1 + (chroma(link_color).luminance() * 0.4 );
 	} else {
-		var tabscLink = '58,58,58';
+		var tabscLink = '58 58 58';
 		var tabsoLink = 0.1 + ((1 - chroma(link_color).luminance()) * 0.4 );
 	}
 
@@ -1895,11 +1946,11 @@ if ((getComputedStyle(GetActiveThemeConfiguration()).getPropertyValue("--active-
 		var lightCaret = isLightColor(caret_color);
 		if (lightCaret) {
 			var lightnessCaret = '#000000';
-			var tabscCaret = '255,255,255';
+			var tabscCaret = '255 255 255';
 			var tabsoCaret = 0.1 + (chroma(caret_color).luminance() * 0.4 );
 		} else {
 			var lightnessCaret = '#ffffff';
-			var tabscCaret = '58,58,58';
+			var tabscCaret = '58 58 58';
 			var tabsoCaret = 0.1 + ((1 - chroma(caret_color).luminance()) * 0.4 );
 		}
 
@@ -1942,11 +1993,11 @@ if ((getComputedStyle(GetActiveThemeConfiguration()).getPropertyValue("--inactiv
 	var lightCaretIT = isLightColor(caretIT_color);
 	if (lightCaretIT) {
 		var lightnessCaretIT = '#000000';
-		var tabscCaretIT = '255,255,255';
+		var tabscCaretIT = '255 255 255';
 		var tabsoCaretIT = 0.1 + (chroma(caretIT_color).luminance() * 0.4 );
 	} else {
 		var lightnessCaretIT = '#ffffff';
-		var tabscCaretIT = '58,58,58';
+		var tabscCaretIT = '58 58 58';
 		var tabsoCaretIT = 0.1 + ((1 - chroma(caretIT_color).luminance()) * 0.4 );
 	}
 
@@ -2284,12 +2335,14 @@ var g2_color = graphs[1];
 var g3_color = graphs[2];
 var g4_color = graphs[3];
 var g5_color = graphs[4];
+var g6_color = graphs[5];
 
 var g1color1 = ColorHover(g1_color,lightness);
 var g2color1 = ColorHover(g2_color,lightness);
 var g3color1 = ColorHover(g3_color,lightness);
 var g4color1 = ColorHover(g4_color,lightness);
 var g5color1 = ColorHover(g5_color,lightness);
+var g6color1 = ColorHover(g6_color,lightness);
 
 
 var imgfilter = getComputedStyle(GetActiveThemeConfiguration()).getPropertyValue("--desktop-background-image-filter");
@@ -2505,64 +2558,64 @@ var invfilters = [
 						  "--message-alternative-foreground-color-hover:" + message_fg[6] + "!important;\n" + 
 						  "--message-alternative-foreground-color-rgb:" + message_fg[5] + "!important;\n" +
 						  "--message-alternative-foreground-color-hover-rgb:" + message_fg[7] + "!important;\n" +
-						  "--desktop-fadeout-color:rgba(var(--desktop-background-color-rgb),var(--fadeout-opacity));" +
-						  "--desktop-text-fadeout-color:rgba(var(--desktop-text-background-color-rgb),var(--fadeout-opacity));" +
-						  "--hyperlink-fadeout-color:rgba(var(--hyperlink-background-color-rgb),var(--fadeout-opacity));" +
-						  "--hyperlink-secondary-fadeout-color:rgba(var(--hyperlink-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--hyperlink-tertiary-fadeout-color:rgba(var(--hyperlink-tertiary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--hyperlink-quaternary-fadeout-color:rgba(var(--hyperlink-quaternary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--visited-hyperlink-fadeout-color:rgba(var(--visited-hyperlink-background-color-rgb),var(--fadeout-opacity));" +
-						  "--visited-hyperlink-secondary-fadeout-color:rgba(var(--visited-hyperlink-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--visited-hyperlink-tertiary-fadeout-color:rgba(var(--visited-hyperlink-tertiary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--visited-hyperlink-quaternary-fadeout-color:rgba(var(--visited-hyperlink-quaternary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--canvas-fadeout-color:rgba(var(--canvas-background-color-rgb),var(--fadeout-opacity));" +
-						  "--canvas-secondary-fadeout-color:rgba(var(--canvas-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--inactive-text-fadeout-color:rgba(var(--inactive-text-background-color-rgb),var(--fadeout-opacity));" +
-						  "--inactive-text-secondary-fadeout-color:rgba(var(--inactive-text-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--inactive-text-tertiary-fadeout-color:rgba(var(--inactive-text-tertiary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--inactive-text-quaternary-fadeout-color:rgba(var(--inactive-text-quaternary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--active-text-fadeout-color:rgba(var(--active-text-background-color-rgb),var(--fadeout-opacity));" +
-						  "--active-text-secondary-fadeout-color:rgba(var(--active-text-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--active-text-tertiary-fadeout-color:rgba(var(--active-text-tertiary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--active-text-quaternary-fadeout-color:rgba(var(--active-text-quaternary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--canvas-text-fadeout-color:rgba(var(--canvas-text-background-color-rgb),var(--fadeout-opacity));" +
-						  "--canvas-text-secondary-fadeout-color:rgba(var(--canvas-text-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--highlight-fadeout-color:rgba(var(--highlight-background-color-rgb),var(--fadeout-opacity));" +
-						  "--highlight-text-fadeout-color:rgba(var(--highlight-text-background-color-rgb),var(--fadeout-opacity));" +
-						  "--highlight-secondary-fadeout-color:rgba(var(--highlight-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--highlight-tertiary-fadeout-color:rgba(var(--highlight-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--highlight-quaternary-fadeout-color:rgba(var(--highlight-tertiary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--active-title-fadeout-color:rgba(var(--active-title-background-color-rgb),var(--fadeout-opacity));" +
-						  "--active-title-text-fadeout-color:rgba(var(--active-title-text-background-color-rgb),var(--fadeout-opacity));" +
-						  "--active-title-secondary-fadeout-color:rgba(var(--active-title-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--active-title-tertiary-fadeout-color:rgba(var(--active-title-tertiary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--active-title-quaternary-fadeout-color:rgba(var(--active-title-quaternary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--inactive-title-fadeout-color:rgba(var(--inactive-title-background-color-rgb),var(--fadeout-opacity));" +
-						  "--inactive-title-text-fadeout-color:rgba(var(--inactive-title-text-background-color-rgb),var(--fadeout-opacity));" +
-						  "--alert-fadeout-color:rgba(var(--alert-background-color-rgb),var(--fadeout-opacity));" +
-						  "--alert-secondary-fadeout-color:rgba(var(--alert-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--alert-tertiary-fadeout-color:rgba(var(--alert-tertiary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--alert-quaternary-fadeout-color:rgba(var(--alert-quaternary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--pause-fadeout-color:rgba(var(--pause-background-color-rgb),var(--fadeout-opacity));" +
-						  "--pause-secondary-fadeout-color:rgba(var(--pause-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--pause-tertiary-fadeout-color:rgba(var(--pause-tertiary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--pause-quaternary-fadeout-color:rgba(var(--pause-quaternary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--warning-fadeout-color:rgba(var(--warning-background-color-rgb),var(--fadeout-opacity));" +
-						  "--warning-secondary-fadeout-color:rgba(var(--warning-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--warning-tertiary-fadeout-color:rgba(var(--warning-tertiary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--warning-quaternary-fadeout-color:rgba(var(--warning-quaternary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--success-fadeout-color:rgba(var(--success-background-color-rgb),var(--fadeout-opacity));" +
-						  "--success-secondary-fadeout-color:rgba(var(--success-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--success-tertiary-fadeout-color:rgba(var(--success-tertiary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--success-quaternary-fadeout-color:rgba(var(--success-quaternary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--progress-fadeout-color:rgba(var(--progress-background-color-rgb),var(--fadeout-opacity));" +
-						  "--progress-secondary-fadeout-color:rgba(var(--progress-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--progress-tertiary-fadeout-color:rgba(var(--progress-tertiary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--progress-quaternary-fadeout-color:rgba(var(--progress-quaternary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--message-fadeout-color:rgba(var(--message-background-color-rgb),var(--fadeout-opacity));" +
-						  "--message-secondary-fadeout-color:rgba(var(--message-secondary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--message-tertiary-fadeout-color:rgba(var(--message-tertiary-background-color-rgb),var(--fadeout-opacity));" +
-						  "--message-quaternary-fadeout-color:rgba(var(--message-quaternary-background-color-rgb),var(--fadeout-opacity));" +
+						  "--desktop-fadeout-color:rgb(var(--desktop-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--desktop-text-fadeout-color:rgb(var(--desktop-text-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--hyperlink-fadeout-color:rgb(var(--hyperlink-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--hyperlink-secondary-fadeout-color:rgb(var(--hyperlink-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--hyperlink-tertiary-fadeout-color:rgb(var(--hyperlink-tertiary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--hyperlink-quaternary-fadeout-color:rgb(var(--hyperlink-quaternary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--visited-hyperlink-fadeout-color:rgb(var(--visited-hyperlink-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--visited-hyperlink-secondary-fadeout-color:rgb(var(--visited-hyperlink-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--visited-hyperlink-tertiary-fadeout-color:rgb(var(--visited-hyperlink-tertiary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--visited-hyperlink-quaternary-fadeout-color:rgb(var(--visited-hyperlink-quaternary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--canvas-fadeout-color:rgb(var(--canvas-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--canvas-secondary-fadeout-color:rgb(var(--canvas-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--inactive-text-fadeout-color:rgb(var(--inactive-text-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--inactive-text-secondary-fadeout-color:rgb(var(--inactive-text-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--inactive-text-tertiary-fadeout-color:rgb(var(--inactive-text-tertiary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--inactive-text-quaternary-fadeout-color:rgb(var(--inactive-text-quaternary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--active-text-fadeout-color:rgb(var(--active-text-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--active-text-secondary-fadeout-color:rgb(var(--active-text-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--active-text-tertiary-fadeout-color:rgb(var(--active-text-tertiary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--active-text-quaternary-fadeout-color:rgb(var(--active-text-quaternary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--canvas-text-fadeout-color:rgb(var(--canvas-text-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--canvas-text-secondary-fadeout-color:rgb(var(--canvas-text-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--highlight-fadeout-color:rgb(var(--highlight-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--highlight-text-fadeout-color:rgb(var(--highlight-text-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--highlight-secondary-fadeout-color:rgb(var(--highlight-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--highlight-tertiary-fadeout-color:rgb(var(--highlight-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--highlight-quaternary-fadeout-color:rgb(var(--highlight-tertiary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--active-title-fadeout-color:rgb(var(--active-title-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--active-title-text-fadeout-color:rgb(var(--active-title-text-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--active-title-secondary-fadeout-color:rgb(var(--active-title-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--active-title-tertiary-fadeout-color:rgb(var(--active-title-tertiary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--active-title-quaternary-fadeout-color:rgb(var(--active-title-quaternary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--inactive-title-fadeout-color:rgb(var(--inactive-title-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--inactive-title-text-fadeout-color:rgb(var(--inactive-title-text-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--alert-fadeout-color:rgb(var(--alert-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--alert-secondary-fadeout-color:rgb(var(--alert-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--alert-tertiary-fadeout-color:rgb(var(--alert-tertiary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--alert-quaternary-fadeout-color:rgb(var(--alert-quaternary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--pause-fadeout-color:rgb(var(--pause-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--pause-secondary-fadeout-color:rgb(var(--pause-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--pause-tertiary-fadeout-color:rgb(var(--pause-tertiary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--pause-quaternary-fadeout-color:rgb(var(--pause-quaternary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--warning-fadeout-color:rgb(var(--warning-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--warning-secondary-fadeout-color:rgb(var(--warning-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--warning-tertiary-fadeout-color:rgb(var(--warning-tertiary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--warning-quaternary-fadeout-color:rgb(var(--warning-quaternary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--success-fadeout-color:rgb(var(--success-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--success-secondary-fadeout-color:rgb(var(--success-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--success-tertiary-fadeout-color:rgb(var(--success-tertiary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--success-quaternary-fadeout-color:rgb(var(--success-quaternary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--progress-fadeout-color:rgb(var(--progress-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--progress-secondary-fadeout-color:rgb(var(--progress-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--progress-tertiary-fadeout-color:rgb(var(--progress-tertiary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--progress-quaternary-fadeout-color:rgb(var(--progress-quaternary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--message-fadeout-color:rgb(var(--message-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--message-secondary-fadeout-color:rgb(var(--message-secondary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--message-tertiary-fadeout-color:rgb(var(--message-tertiary-background-color-rgb) / var(--fadeout-opacity));" +
+						  "--message-quaternary-fadeout-color:rgb(var(--message-quaternary-background-color-rgb) / var(--fadeout-opacity));" +
 						  "--canvas-secondary-background-color:" + dropdowncolor + ";\n" + 
 						  "--canvas-secondary-background-color-hover:" + dropdowncolorH + ";\n" + 
 						  "--canvas-secondary-gradient-color:" + dropdowncolor_gradient[0] + ";\n" +
@@ -2954,27 +3007,31 @@ var invfilters = [
 						  "--message-quaternary-background-color-hover:" + message4color1 + "!important;\n" +
 						  "--message-quaternary-background-color-rgb:" + ColorRGB(message4_color) + "!important;\n" +
 // Graphs
-						  "--graph-1-background-color:" + g1_color + "!important;\n" +
-						  "--graph-1-background-color-hover:" + g1color1 + "!important;\n" +
-						  "--graph-2-background-color:" + g2_color + "!important;\n" +
-						  "--graph-2-background-color-hover:" + g2color1 + "!important;\n" +
-						  "--graph-3-background-color:" + g3_color + "!important;\n" +
-						  "--graph-3-background-color-hover:" + g3color1 + "!important;\n" +
-						  "--graph-4-background-color:" + g4_color + "!important;\n" +
-						  "--graph-4-background-color-hover:" + g4color1 + "!important;\n" +
-						  "--graph-5-background-color:" + g5_color + "!important;\n" +
-						  "--graph-5-background-color-hover:" + g5color1 + "!important;\n" +
+						  "--cpu-graph-background-color:" + g1_color + "!important;\n" +
+						  "--cpu-graph-background-color-hover:" + g1color1 + "!important;\n" +
+						  "--ram-graph-background-color:" + g2_color + "!important;\n" +
+						  "--ram-graph-background-color-hover:" + g2color1 + "!important;\n" +
+						  "--disk-graph-background-color:" + g3_color + "!important;\n" +
+						  "--disk-graph-background-color-hover:" + g3color1 + "!important;\n" +
+						  "--network-graph-background-color:" + g4_color + "!important;\n" +
+						  "--network-graph-background-color-hover:" + g4color1 + "!important;\n" +
+						  "--gpu-graph-background-color:" + g5_color + "!important;\n" +
+						  "--gpu-graph-background-color-hover:" + g5color1 + "!important;\n" +
+						  "--npu-graph-background-color:" + g6_color + "!important;\n" +
+						  "--npu-graph-background-color-hover:" + g6color1 + "!important;\n" +
 // Graphs (RGB)
-						  "--graph-1-background-color-rgb:" + ColorRGB(g1_color) + "!important;\n" +
-						  "--graph-1-background-color-hover-rgb:" + ColorRGB(g1color1) + "!important;\n" +
-						  "--graph-2-background-color-rgb:" + ColorRGB(g2_color) + "!important;\n" +
-						  "--graph-2-background-color-hover-rgb:" + ColorRGB(g2color1) + "!important;\n" +
-						  "--graph-3-background-color-rgb:" + ColorRGB(g3_color) + "!important;\n" +
-						  "--graph-3-background-color-hover-rgb:" + ColorRGB(g3color1) + "!important;\n" +
-						  "--graph-4-background-color-rgb:" + ColorRGB(g4_color) + "!important;\n" +
-						  "--graph-4-background-color-hover-rgb:" + ColorRGB(g4color1) + "!important;\n" +
-						  "--graph-5-background-color-rgb:" + ColorRGB(g5_color) + "!important;\n" +
-						  "--graph-5-background-color-hover-rgb:" + ColorRGB(g5color1) + "!important;\n" +
+						  "--cpu-graph-background-color-rgb:" + ColorRGB(g1_color) + "!important;\n" +
+						  "--cpu-graph-background-color-hover-rgb:" + ColorRGB(g1color1) + "!important;\n" +
+						  "--ram-graph-background-color-rgb:" + ColorRGB(g2_color) + "!important;\n" +
+						  "--ram-graph-background-color-hover-rgb:" + ColorRGB(g2color1) + "!important;\n" +
+						  "--disk-graph-background-color-rgb:" + ColorRGB(g3_color) + "!important;\n" +
+						  "--disk-graph-background-color-hover-rgb:" + ColorRGB(g3color1) + "!important;\n" +
+						  "--network-graph-background-color-rgb:" + ColorRGB(g4_color) + "!important;\n" +
+						  "--network-graph-background-color-hover-rgb:" + ColorRGB(g4color1) + "!important;\n" +
+						  "--gpu-graph-background-color-rgb:" + ColorRGB(g5_color) + "!important;\n" +
+						  "--gpu-graph-background-color-hover-rgb:" + ColorRGB(g5color1) + "!important;\n" +
+						  "--npu-graph-background-color-rgb:" + ColorRGB(g6_color) + "!important;\n" +
+						  "--npu-graph-background-color-hover-rgb:" + ColorRGB(g6color1) + "!important;\n" +
 // Luna Levit
 						  "--mica-background-color:" + micabg[0] + ";\n" +
 // Misc Variables
