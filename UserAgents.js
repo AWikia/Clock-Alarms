@@ -1,65 +1,5 @@
-/* Make SmartTVs recognize cursors */
-if (navigator.userAgent.match("SmartTV")) {
-document.getElementById("Handler").className += " smart"
-}
-
-if (navigator.userAgent.match("Macintosh")) {
-document.getElementById("Handler").className += " osx"
-}
-
-if (navigator.userAgent.match("Linux")) {
-document.getElementById("Handler").className += " xubuntu"
-}
-
-/* CSS for App */
-if (navigator.userAgent.match("MW18")) {
-document.getElementById("Handler").className += " mpisto-servers"
-}
-
-	// Some old Fox Versions
-	var ua_agent = navigator.userAgent
-
-	if ( (ua_agent.match("Safari/")) && !( (ua_agent.match("Chrome/")) || (ua_agent.match("YNGT")) ) ) { // Safari
-		window.oldBrowser = ua_agent.match(/Version\/(\d+)/)[1] < 16
-	}
-
-	if ( (ua_agent.match("Firefox/")) && !( (ua_agent.match("PaleMoon/")) ) ) { // Mozilla Firefox
-		window.oldBrowser = ua_agent.match(/Firefox\/(\d+)/)[1] < 113
-	}
-
-	if ( (ua_agent.match("PaleMoon/")) ) { // Pale Moon
-		window.oldBrowser = ua_agent.match(/PaleMoon\/(\d+)/)[1] < 32
-	document.querySelector('html').classList.add('pale-moon')
-	}
-
-
-	if ( (ua_agent.match("Chrome/")) && !( (ua_agent.match("Edge/")) ) ) { // Google Chrome
-		window.oldBrowser = ua_agent.match(/Chrome\/(\d+)/)[1] < 113
-	}
-	
-
-	window.oldBrowser =( 
-						(window.oldBrowser) ||						    // Old Chrome, Firefox and Safari 
-						(ua_agent.match("Trident")) ||					// Internet Explorer 				
-						(ua_agent.match("Presto")) || 					// Classic Opera
-						(ua_agent.match("Tessera")) || 					// 4x4 Browser
-						(ua_agent.match("MINERVOULA")) || 				// Older mInerva
-						(ua_agent.match("Silk")) || 					// Amazon Silk
-						(ua_agent.match("PLAYSTATION 3")) || 			// PS3 Browser
-						(ua_agent.match("Nintendo DSi")) || 			// Nintendo DSi Browser
-						(ua_agent.match("Nintendo 3DS")) || 			// Nintendo 3DS Browser
-						(ua_agent.match("PLAYSTATION PORTABLE")) || 	// PSP Browser
-						(ua_agent.match("Edge")) || 					// Classic Microsoft Edge
-						(ua_agent.match("BlackBerry")) || 				// Blackberry Browser
-						(ua_agent.match("IEMobile")) ||	 				// Phone Internet Explorer
-						(ua_agent.match("PaleMoon"))					// Pale Moon/
-						)
-	
-	if (window.oldBrowser) {
-	window.location.replace("https://hm100.github.io/UnsupportedBanners/Mpisto.html");window.location.href = "https://hm100.github.io/UnsupportedBanners/Mpisto.html";
-}
-
-// <!--END-->
+// MediaWiki
+	var mediawiki = document.querySelector("html:not(.ivilution-loaded) body.mediawiki");
 
 /* Mobile Only CSS */
 
@@ -276,7 +216,7 @@ function AddFloatingBanner(content='Sample Content',kind='message',extraclass=''
 	}
 
 	document.querySelector(".top-gap #floatingbanner .banners").insertAdjacentHTML('beforeend', 
-			'<div class=" cpe-banner-notification is-' + kind + '" id="' + extraclass  + '">' +
+			'<div class=" cpe-banner-notification is-transparent is-' + kind + '" id="' + extraclass  + '">' +
 			  '<div class="cpe-banner-notification__icon">' +
 				'<span class="cpe-icon cpe-icon-small material-icons">' +
 					icon + 
@@ -288,6 +228,11 @@ function AddFloatingBanner(content='Sample Content',kind='message',extraclass=''
 			  '</span>' +
 			'</div>' 
 	);
+
+setTimeout(
+		(function () {
+			document.querySelector(".top-gap #floatingbanner .banners .cpe-banner-notification.is-transparent").classList.remove("is-transparent")
+	}),0);
 	
 
 
