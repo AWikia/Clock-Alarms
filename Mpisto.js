@@ -56,16 +56,7 @@
 		insertKey('ckal-stopwatch-sound', '13' );
 	}
 		/* Active Theme */
-		if (getKey('device-theme') === 'light' ) {
-			active_tm_theme =  (getKey('color-style-behavior') === 'duo' ) ? 'auto' : 'light'
-		} else if ( (getKey('device-theme') === 'dark' ) ) {
-			active_tm_theme =  (getKey('color-style-behavior') === 'duo' ) ? 'auto-dark' : 'dark'
-		} else if ( (getKey('device-theme') === 'auto' ) || (getKey('device-theme') === 'auto-dark' ) ) {
-			active_tm_theme = 'custom';
-		} else {
-			active_tm_theme = 'auto';
-		}
-		document.getElementById("AppTheme" + ['01','02','03','04','05'][ ['auto','auto-dark','light','dark','custom'].indexOf(active_tm_theme) ]).checked=true;
+		document.getElementById("AppTheme" + ['01','02','03','04'][ ['auto','auto-dark','light','dark'].indexOf(getKey('color-scheme')) ]).checked=true;
 		/* Default Page */
 		default_page = getKey('ckal-default-page');
 		$('body').attr("page",  default_page);

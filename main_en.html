@@ -76,6 +76,7 @@
 		<div class="cpe-theming visualcolors-nocolormanagement dcmmode-custom_3"></div>
 		<div class="cpe-theming visualcolors-nocolormanagement dcmmode-custom_4"></div>
 	</div>
+	<div class="filter-overlay"></div>
 	<div tabindex="-1" class="focus-overlay" style="pointer-events:none;"></div>
 	<div id="LunaLevit" style=" pointer-events: none; position: fixed; z-index: -2; width: 100%; height: 100%;">
 		<div class="invertion-on" style=" pointer-events: none; position: fixed; z-index: -2; width: 100%; height: 100%;">
@@ -314,16 +315,13 @@
 								<span translate="no" class="cpe-icon material-icons">palette</span>
 								App Theme
 								</h2></summary>
-								<input type="radio" name="AppTheme" id="AppTheme01" onclick="colortheme('match-parent','light','match-parent','match-parent','duo')"><label for="AppTheme01">Automatic</label>
+								<input type="radio" name="AppTheme" id="AppTheme01" onclick="ColorScheme('auto')"><label for="AppTheme01">Automatic</label>
 								<br>
-								<input type="radio" name="AppTheme" id="AppTheme02" onclick="colortheme('match-parent','dark','match-parent','match-parent','duo')"><label for="AppTheme02">Automatic (Dark)</label>
+								<input type="radio" name="AppTheme" id="AppTheme02" onclick="ColorScheme('auto-dark')"><label for="AppTheme02">Automatic (Dark)</label>
 								<br>
-								<input type="radio" name="AppTheme" id="AppTheme03" onclick="colortheme('match-parent','light','match-parent','match-parent','solo')"><label for="AppTheme03">Light</label>
+								<input type="radio" name="AppTheme" id="AppTheme03" onclick="ColorScheme('light')"><label for="AppTheme03">Light</label>
 								<br>
-								<input type="radio" name="AppTheme" id="AppTheme04" onclick="colortheme('match-parent','dark','match-parent','match-parent','solo')"><label for="AppTheme04">Dark</label>
-								<div>
-								<input type="radio" name="AppTheme" id="AppTheme05"><label for="AppTheme05">Custom</label>
-								</div>
+								<input type="radio" name="AppTheme" id="AppTheme04" onclick="ColorScheme('dark')"><label for="AppTheme04">Dark</label>
 								</details>
 								<div style="margin:5px 0;"><small>This setting sets Clock and Alarm's device theme</small></div>
 							</div>
