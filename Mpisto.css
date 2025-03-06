@@ -1137,6 +1137,7 @@ line-height:16px;
 
 .settings_page .upper {
 	height:48px;
+	min-height:48px;
 	display:flex;
 	align-items:center;
 }
@@ -1152,6 +1153,25 @@ line-height:16px;
 	font-weight:500;
 	flex:1;
 	color:var(--canvas-text-secondary-background-color);
+}
+
+@media only screen and (max-width:399px) {
+.settings_page .upper h2,
+.proc_page footer h2 {
+	font-size:125%;
+}
+}
+
+@media only screen and (max-width:511px) {
+.settings_page .upper .cpe-button span:not(.cpe-icon),
+.proc_page footer .cpe-button span:not(.cpe-icon) {
+	display:none;
+}
+
+.settings_page .upper .cpe-button span,
+.proc_page footer .cpe-button span {
+	margin:0!important;
+}
 }
 
 .proc_page .upper span:hover,
@@ -1192,6 +1212,7 @@ line-height:16px;
 	justify-content:flex-end;
 	transition:background-color var(--transition-duration) var(--transition-timing-function);
 	height:48px;
+	min-height:48px;
 }
 
 
