@@ -115,12 +115,14 @@
 		$('.cpe-dropdown.cpe-select.alarm_sounds').on( "blur",function() { insertKey('ckal-alarm-sound', getAlarmSound() ) });
 		document.querySelector('.cpe-dropdown.cpe-select.alarm_sounds .cpe-select__value').setAttribute("value", getKey('ckal-alarm-sound'));
 		document.querySelector('.cpe-dropdown.cpe-select.alarm_sounds .cpe-select__value').innerHTML = getAlarmSoundName();
+		document.querySelector('.cpe-dropdown.cpe-select.alarm_sounds .cpe-list.is-linked li[value="'+ getKey('ckal-alarm-sound') + '"').classList.add("selected");
 		/* Stopwatch Page */
 		stopwatches=[];
 		stopwatch_sound = getKey('ckal-stopwatch-sound');
 		$('.cpe-dropdown.cpe-select.stopwatch_sounds').on( "blur",function() { insertKey('ckal-stopwatch-sound', getStopwatchSound() ) });
 		document.querySelector('.cpe-dropdown.cpe-select.stopwatch_sounds .cpe-select__value').setAttribute("value", getKey('ckal-stopwatch-sound'));
 		document.querySelector('.cpe-dropdown.cpe-select.stopwatch_sounds .cpe-select__value').innerHTML = getStopwatchSoundName();
+		document.querySelector('.cpe-dropdown.cpe-select.stopwatch_sounds .cpe-list.is-linked li[value="'+ getKey('ckal-stopwatch-sound') + '"').classList.add("selected");
 		/* Timer Page */
 		window.ckal_totaltime = 0;
 		window.ckal_timertime = 0;
