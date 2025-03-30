@@ -1186,8 +1186,6 @@ line-height:16px;
 	background-color:rgb(from var(--canvas-background-color) r g b / var(--page-opacity));
 	color:var(--canvas-text-background-color);
 	scrollbar-color:var(--scrollbar-thumb-color-1) var(--scrollbar-track-color-1);
-	/* Width */
-	--scrollbar-width:17px;
 	/* Track */
 	--scrollbar-track-color-1:var(--canvas-background-color);
 	--scrollbar-track-color-2:var(--canvas-background-color-hover);
